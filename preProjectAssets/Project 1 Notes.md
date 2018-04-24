@@ -1,31 +1,34 @@
-Group Project Read Me
+**CineMunchies Read Me**
 ====
+This is a group project for the University of Minnesota Coding Bootcamp Cohort 4. 
+
+### **The group project must meet these requirements:**
 + Must use at least two APIs (AJAX)  
 <https://github.com/toddmotto/public-apis>
-+ Use new library of tech we haven't used yet. 
-+ Must have good front-end/UI/UX 
-+ Keep code clean and have a clear standard
-+ Don't use alerts/prompts/confirms
-+ Have some sort of repeating elements (tables/columns/calendars)
-+ Use Bootstrap or an alternative CSS framework 
-+ Make sure site is deployed on github pages
++ Must use new library of tech we haven't used yet 
++ Must have a slick UI
++ Must have clean code that meets coding standards
++ Shouldn't use alerts, prompts, or confirms
++ Must have some sort of repeating element like tables, columns, or calendars
++ Must use Bootstrap or an alternative CSS framework 
++ Must be deployed on github pages
 + Must have user input validation
-+ Use Firebase to store information
++ Must use Firebase to store information
 
-# Nice to Haves
- 
- Check out Materialize
+# Nice to Have Features
+ + Mobile responsiveness
+ + Utilize Materialize or other CSS Frameworks
 
 
 # Project Questions
 
-Have the project on one user's github account and add everyone else as a collaborator
+Have the project on one github account and add everyone else as a collaborator.
 
 # Presentation
-This is a formal presentation
-Should be about 10 minutes long
+There will be a formal presentation.      
+The presentation should be about 10 minutes long and showcase the functionality of the project as well as a slick UI/UX.
 
-# Metrics
+# Metrics for the Project
 + Concept
 + Design
 + Functionality
@@ -33,7 +36,7 @@ Should be about 10 minutes long
 + Presentation
 
 # API Suggestions
-Stick to APIs that do these: 
+Stick to APIs with these features: 
 + Allows CORS -   
 <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>
 + Simple/no authentication
@@ -42,28 +45,25 @@ Stick to APIs that do these:
 
 # Tools
 + Trello for project management  
- (Jesse and Mikey are more familiar with Trello)
 + Github projects
 + Asana 
++ JIRA
 
-# Group Name Ideas
-+ 
-+ 
-+ 
-+ 
-+ 
+# Group Name Ideas:
+ ## Team Urkel
 
-# Group To Dos
-1. Come up with a group name. 
+
+# Group To-Dos
+1.  ~~Come up with a group name.~~   
 2. Create a slack channel instead of just DMing. 
-3. Come up with useful ideas
-4. Find and decide on several APIs that can be used
-5. Discuss roles based on group project recommendations?
+3. ~~Come up with useful project ideas~~
+4. ~~Find and decide on several APIs that can be used~~
+5. ~~Discuss roles based on group project recommendations?~~
 
 
 # Due by end of class 4/23/18
 
- **1 Page Proposal**: 
+ **1 Page Proposal That Includes**: 
 + Title
 + Members
 + Description 
@@ -78,15 +78,18 @@ Stick to APIs that do these:
 ## **Title: Cinemunchies**
 
 ## **Group Members:**  
-Zac Zeilholz
-Robyn Craig
-Kimberly Maturo-Hilt 
+Zac Keilholz  
+Robyn Craig  
+Kimberly Maturo-Hilt   
 Kalsang Bhutia
 
 ## **Description:**
-CineMunchies will provide users with a curated list of recipes that appear in movies and television shows they. . 
+CineMunchies will provide users with a curated list of recipes that appear in movies and television shows they watch. All the user has to do is search for their show or movie and the site will populate a list of recipes for foods that appear in it. 
 
 ## **Balsamique Sketch:**  
+Located in the preProjectAssets folder of the repo.  
+
+<https://github.com/ZacKeilholz/CineMunchies/tree/master/preProjectAssets>
 
 ## **APIS:**
 
@@ -114,18 +117,14 @@ Twitter
 **Presentation/Project Management/QA and Testing:**  
 Kimberly Maturo-Hilt
 
-**UI/UX:**  
- HTML/CSS/Bootstrap Mobile First  
+**UI/UX:HTML/CSS/Bootstrap/jQuery**   
  Robyn Craig
 
-**Javascript:**  
-Back-End:   
+**Javascript:**     
 APIs/AJAX/Firebase:  
-Kalsang Bhutia    
-(Zac Keilholz)
+Zac Keilholz (Architect)  
+Kalsang Bhutia (Code Monkey)    
 
-**Architect:**   
-Zac Keilholz
 
 
 
