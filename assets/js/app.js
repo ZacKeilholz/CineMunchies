@@ -1,0 +1,1 @@
+// Set up initial app.js structure - setup functions, global vars, Misc. functions, document ready/jquery events, 
