@@ -1,1 +1,62 @@
-<!--Add pseudocode / simplified html here-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>CineMunchies</title>
+    <!-- Bootstrap CDN Link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+      <!-- Font Awesome CSS Icons (For cool glyphicons) -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="text-center"><i class="fas fa-film"></i>CineMunchies<i class="fas fa-film"></i></h1>
+      </div>
+    </div>
+
+    <!-- Add Movie -->
+    <div class="container" id="search-container">
+
+      <div class="card card-default">
+        <!-- <div class="card-heading">
+        <h3 class="card-title"><i class="fas fa-train"></i>Current Train Schedules</h3>
+        </div> -->
+
+        <div class="card-body">
+
+          <form role="form" id="search-form">
+
+            <!-- Radio Buttons -->
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline1">Movie</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline2">Food</label>
+            </div>
+
+            <!-- Input Field -->
+            <div class="form-group row">
+              <input class="form-control" id="search-input" type="text" placeholder="Movie Title">
+            </div>
+            <button class="btn btn-primary" id="search-submit" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+  <!-- jQuery CDN -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Firebase Script -->
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <!-- My JS File-->
+  <script src="assets/javascript/app.js"></script>
+
+</html>
