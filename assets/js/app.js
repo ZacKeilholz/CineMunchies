@@ -18,14 +18,17 @@
 $(document).ready(function() {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
   $(".first-page").show();
-  $("#second-container").hide();
+  $("#second-search-container").hide();
+  $("#movie-results-container").hide();
+
 
   // when form is submitted the API call will be made
 
-  $("#search-form").on("submit", function(event) {
+  $("#page1-search-form").on("submit", function(event) {
     event.preventDefault();
     var apiKey = "39a2a8a2";
-    var $search = $("#search-input").val();
+    var $search = $("#page1-search-input").val();
+    console.log($search);
     var omdbURL ="https://www.omdbapi.com/?t=" + $search + "&y=&plot=short&apikey=" + apiKey;
     var edamamURL = "";
     var queryURL = "";
@@ -44,9 +47,10 @@ $(document).ready(function() {
     }).then(function(response) {
 
      //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
+     $("#page1-search-container").hide();
+     $("#second-search-container").show();
+     $("#movie-results-container").show();
 
-      $(".first-page").hide();
-      $("#second-container").show();
       var data = response;
       
       //this conditional is in preparation for future reverse search functionality
@@ -57,7 +61,7 @@ $(document).ready(function() {
           .append(`<td scope="row">${data.Title}</td>`)
           .append(`<td scope="row">${data.Plot}</td>`)
           .append(`<td scope="row"><img src=${data.Poster}></td>`);
-        $("tbody").prepend($newMovie);
+        $("#movie-results-table").prepend($newMovie);
 
       } else {
         //Writing this code out in case we get to the reverse search features
