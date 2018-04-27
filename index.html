@@ -16,57 +16,117 @@
 
 <body>
 
-  <div class="container">
-    <div class="jumbotron">
-      <h1 class="text-center">
-        <i class="fas fa-film"></i>CineMunchies
-        <i class="fas fa-film"></i>
-      </h1>
+  <div class="container" id="main-container">
+
+    <!-- FIRST PAGE -->
+    <div class="container" id="first-container">
+      <div class="container">
+        <div class="jumbotron">
+          <h1 class="text-center">
+            <i class="fas fa-film"></i>CineMunchies
+            <i class="fas fa-film"></i>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Add Movie -->
+      <div class="container" id="search-container">
+
+        <div class="card card-default">
+
+          <div class="card-body">
+
+            <form role="form" id="search-form">
+
+              <!-- Radio Buttons -->
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1">Movie</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline2">Food</label>
+              </div>
+
+              <!-- Input Field -->
+              <div class="form-group row">
+                <input class="form-control" id="search-input" type="text" placeholder="Movie Title">
+              </div>
+              <button class="btn btn-primary" id="search-submit" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Add Movie -->
-  <div class="container" id="search-container">
+  <!-- SECOND PAGE -->
+  <div class="container" id="second-container">
 
-    <div class="card card-default">
-      <!-- <div class="card-heading">
-        <h3 class="card-title"><i class="fas fa-train"></i>Current Train Schedules</h3>
-        </div> -->
+    <!-- Search for a new movie -->
+    <div class="container" id="search-container">
 
-      <div class="card-body">
+      <div class="card card-default">
 
-        <form role="form" id="search-form">
+        <div class="card-body">
 
-          <!-- Radio Buttons -->
-          <div class="custom-control custom-radio custom-control-inline first-page">
-            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline1">Movie</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline first-page">
-            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-            <label class="custom-control-label" for="customRadioInline2">Food</label>
-          </div>
+          <form role="form" id="search-again-form">
 
-          <!-- Input Field -->
-          <div class="form-group row">
-            <input class="form-control" id="search-input" type="text" placeholder="Movie Title">
-          </div>
-          <button class="btn btn-primary" id="search-submit" type="submit">Search</button>
-        </form>
+            <div class="row">
+
+              <!-- Input Field -->
+              <div class="col-md-8">
+                <div class="form-group row">
+                  <input class="form-control" id="search-again-input" type="text" placeholder="Movie Title">
+                  <button class="btn btn-primary" id="search-again-submit" type="submit">Search Again</button>
+                </div>
+              </div>
+
+
+              <!-- Radio Buttons -->
+              <div class="col-md-4">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline1">Movie</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2">Food</label>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
-    <table class="table table-hide">
-      <thead>
-        <tr>
-          <th colspan="3" id="table-title"></th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+    <!-- Movie Results -->
+    <div class="container" id="movie-results-container">
+
+      <div class="card card-default">
+
+        <div class="card-body">
+
+          <table class="table table-hide">
+            <thead>
+              <tr>
+                <th colspan="3" id="table-title"></th>
+              </tr>
+            </thead>
+            
+            <tbody>
+            </tbody>
+          </table>
+
+
+        </div>
+
+      </div>
+    </div>
   </div>
-  </div>
+
+
 </body>
 
 <!-- jQuery CDN -->

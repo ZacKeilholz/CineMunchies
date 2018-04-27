@@ -18,7 +18,7 @@
 $(document).ready(function() {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
   $(".first-page").show();
-  $(".table-hide").hide();
+  $("#second-container").hide();
 
   // when form is submitted the API call will be made
 
@@ -46,7 +46,7 @@ $(document).ready(function() {
      //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
 
       $(".first-page").hide();
-      $(".table-hide").show();
+      $("#second-container").show();
       var data = response;
       
       //this conditional is in preparation for future reverse search functionality
