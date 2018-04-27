@@ -1,8 +1,8 @@
 body {
-  background: url("../images/gplaypattern.png");
+  background: url("../images/utensils.png");
 }
 
-.container {
+#main-container {
   width: 100%;
   max-width: 960px;
   margin: 10px auto 50px auto;
@@ -30,5 +30,9 @@ form {
 .form-control {
   text-align: center;
   margin: 10px auto auto auto;
-  width: 50%;
-}  
+  width: 60%;
+}
+
+.custom-control-inline {
+  margin-top: 15px;
+}
