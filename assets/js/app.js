@@ -1,1 +1,39 @@
-// Set up initial app.js structure - setup functions, global vars, Misc. functions, document ready/jquery events, 
+//JS Setup Functions (Firebase, etc) 
+//=================================
+
+
+
+
+//Global Vars 
+//=================================
+
+
+
+
+
+
+
+//Jquery HTML Targets 
+//=================================
+
+//var $exampleTarget = $("#example-container");
+
+
+
+
+
+//Misc. Functions
+//=================================
+
+
+
+
+//JQuery Events / Event Listeners
+//=================================
+$(document).ready(function () {
+
+
+
+
+    
+});
