@@ -185,6 +185,7 @@
                 var refMovies = database.ref('movies/' + movieName);
 
 
+
                 //Check database to make sure food isn't already added
                 refMovies.on('value', checkForDuplicateFood, firebaseErrorData);
 
@@ -200,6 +201,17 @@
                     //create a bootstrap alert at top of page notifying user that the input food already exists
                 }
 
+                //Testing to see if this movie has a database entry at all- and pushing data to it if not. 
+                //Check if database entry exists
+                refMovies.once("value")
+                    .then(function (snapshot) {
+                        var a = snapshot.exists(); // true
+                        if (!a) {
+                            refMovies.push(foodData);
+                            refMovies.on('value', pullFirebaseData, firebaseErrorData);
+
+                        }
+                    });
 
 
 
@@ -209,6 +221,7 @@
             //Get list of foods from Firebase! (data parameter is a reference to the Firebase )
             //==================================
             function pullFirebaseData(data) {
+
 
                 //Clear out the food list container each time this function is called 
                 $("#food-list").empty();
@@ -239,11 +252,15 @@
             //Check if item exists in Firebase food list
             //===========================================
             function checkForDuplicateFood(data) {
+
+
                 console.log("checking for duplicates...");
                 console.log("Input food was: ", addedFood);
                 //Retrieve Firebase food data for the specific movie that was passed into the function
                 var foodObject = data.val();
                 var keys = Object.keys(foodObject);
+
+
 
                 for (var i = 0; i < keys.length; i++) {
                     var k = keys[i];
