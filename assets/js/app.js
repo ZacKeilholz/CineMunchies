@@ -17,9 +17,16 @@
 
 $(document).ready(function() {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
-  $(".first-page").show();
-  $("#second-container").hide();
+  
+  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed. 
+  $("#first-page-search").show();
+  $("#second-page-search,#third-container,#movie-results-container").hide();
 
+
+  $("body").on("click",".movie-item",function(){
+console.log("click");
+console.log($(this).attr("data-name"));
+  });
   // when form is submitted the API call will be made
 
   $("#search-form").on("submit", function(event) {
@@ -45,13 +52,18 @@ $(document).ready(function() {
 
      //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
 
-      $(".first-page").hide();
-      $("#second-container").show();
+      $(".first-page-search").hide();
+      $("#second-page-search,#movie-results-container").show();
       var data = response;
+      console.log(data);
       
       //this conditional is in preparation for future reverse search functionality
       if ((queryURL = omdbURL)) {
         var $newMovie = $("<tr>");
+        var titleClean=data.Title;
+        titleClean=titleClean.replace(/\s+/g,"-").toLowerCase();
+        console.log(titleClean);
+        $newMovie.addClass("movie-item").attr("data-name",titleClean);
 
         $newMovie
           .append(`<td scope="row">${data.Title}</td>`)
