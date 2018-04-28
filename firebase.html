@@ -133,8 +133,6 @@
 
             //============================================================
 
-
-
             //Scenario:  From the list of movies, a movie row is clicked- we grab something from there that contains the movie name and we  1. pulls up the Firebase list of foods under that movie name, clear and refresh a local array of those foods for our own reference and create an 'add food form' that has a button with a data-name attribute that that matches the movie that was just selected.  
 
             //On Click event for movie list line-item
@@ -142,10 +140,10 @@
 
                 //Get name of movie from movie data attribute
                 var movieName = $(this).attr("data-name");
-
+            
                 //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
                 $("#submit-button").attr("data-name", movieName);
-
+                
                 //Get Target Firebase Location- we want the specific movie
                 refMovies = database.ref('movies/' + movieName);
 
