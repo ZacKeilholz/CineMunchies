@@ -62,16 +62,16 @@ $(document).ready(function () {
 
   //ADDING NEW FOOD ITEM TO FIREBASE (FORM SUBMIT)
 
-  $("body").on("click", "#submit-button", function (event) {
+  $("body").on("click", "#add-food-submit", function (event) {
     event.preventDefault();
 
     uniqueToggle = false;
 
     //Get Form Input Value
-    var $foodInput = $("#input-name");
+    var $foodInput = $("#add-food-input");
 
     //Get current moviename from submit button (was passed here after clicking a movie name)
-    var movieName = $("#submit-button").attr("data-name");
+    var movieName = $("#add-food-submit").attr("data-name");
 
     //Get input text from form
     addedFood = $foodInput.val();
@@ -131,17 +131,20 @@ $(document).ready(function () {
     //Append food items to html and local array
     for (var i = 0; i < keys.length; i++) {
 
-      //Create HTML Object to contain the food item
-      var foodButton = $("<button>");
-      foodButton.addClass("btn btn-success btn-block mr-2 recipe-item");
+
 
       //Get object key (there is always key above the data we want)
       var k = keys[i];
       //Get the specific food value at this key
       var foodItem = foodObject[k].food;
+
+      //Create HTML Object to contain the food item
+      var foodListItem = $("<li>");
+      foodListItem.addClass("food-item");
+
       //Append to html food list container
-      foodButton.text(foodItem);
-      $("#food-list").append(foodButton);
+      foodListItem.text(foodItem);
+      $("#food-list").append(foodListItem);
     }
   }
 
@@ -154,7 +157,6 @@ $(document).ready(function () {
     //Retrieve Firebase food data for the specific movie that was passed into the function
     var foodObject = data.val();
     var keys = Object.keys(foodObject);
-
 
 
     for (var i = 0; i < keys.length; i++) {
@@ -177,10 +179,8 @@ $(document).ready(function () {
     console.log(err);
   }
 
-
-
-
-
+  //MOVIE REQUEST API
+  //=============================================
 
   // when form is submitted the API call will be made
 
