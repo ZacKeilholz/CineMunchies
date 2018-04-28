@@ -39,17 +39,13 @@
             <form role="form" id="search-form">
 
               <!-- Radio Buttons -->
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">
-                  Movie
-                </label>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline1">Movie</label>
               </div>
-              <div class="form-check disabled form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                <label class="form-check-label" for="exampleRadios3">
-                  Food (coming soon)
-                </label>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline2">Food</label>
               </div>
 
               <!-- Input Field -->
@@ -85,6 +81,19 @@
                 </div>
               </div>
 
+
+              <!-- Radio Buttons -->
+              <div class="col-md-4">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline3">Movie</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline4">Food</label>
+                </div>
+              </div>
+
             </div>
           </form>
         </div>
@@ -95,6 +104,10 @@
     <div class="container" id="movie-results-container">
 
       <div class="card">
+
+        <div class="card-header">
+        Movie Munchies
+        </div>
 
         <div class="card-body">
 
