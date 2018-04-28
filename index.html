@@ -58,7 +58,6 @@
         </div>
       </div>
     </div>
-  </div>
 
   <!-- SECOND PAGE -->
   <div class="container" id="second-container">
@@ -104,7 +103,11 @@
     <!-- Movie Results -->
     <div class="container" id="movie-results-container">
 
-      <div class="card card-default">
+      <div class="card">
+
+        <div class="card-header">
+        Movie Munchies
+        </div>
 
         <div class="card-body">
 
@@ -124,8 +127,62 @@
 
       </div>
     </div>
+
   </div>
 
+  <!-- THIRD PAGE -->
+  <div class="container" id="third-container">
+    <!-- WE CAN REMOVE THIS LATER -->
+    <h3>This is page 3</h3>
+
+    <!-- Search for a new movie -->
+    <div class="container" id="search-container">
+
+      <div class="card card-default">
+
+        <div class="card-body">
+
+          <form role="form" id="search-again-form">
+
+              <!-- Input Field -->
+              <div class="col-md-8">
+                <div class="form-group row">
+                  <input class="form-control" id="search-again-input" type="text" placeholder="Movie Title">
+                  <button class="btn btn-primary" id="search-again-submit" type="submit">Search Again</button>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+    <!-- Food Results -->
+    <div class="container" id="movie-food-container">
+
+      <div class="card">
+
+        <div class="row">
+          <div class="card-body">
+            <h5 class="card-title" id="movie-food-result">Human</h5>
+            <p class="card-text">This was in the movie when the person got eaten.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="card-body" id="add-food">
+            <p class="card-text">Food not listed above? Add yours here!</p>
+            <input class="form-control" id="add-food-input" type="text" placeholder="Food">
+            <button class="btn btn-primary" id="add-food-submit" type="submit">Add Food</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 

@@ -36,3 +36,11 @@ form {
 .custom-control-inline {
   margin-top: 15px;
 }
+
+#add-food {
+  text-align: center;
+}
+
+#add-food-submit {
+  margin-top: 10px;
+}
