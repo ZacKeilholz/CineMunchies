@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.1/examples/dashboard/dashboard.css" rel="stylesheet">
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <title>Firebase Testing</title>
+
+</head>
+
+<body>
+
+    <!-- Example list of movies (as buttons, but will likely end up being TR's... We also need to deal with multi-word movie titles -->
+    <div class="container mt-2 mb-2">
+        <button class="movie-item btn btn-primary btn-block" data-name="gladiator">Gladiator</button>
+    </div>
+    <br>
+    <div class="container mt-2 mb-2">
+        <button class="movie-item btn btn-primary btn-block" data-name="lion-king">Lion King</button>
+    </div>
+    <br>
+    <div class="container mt-2 mb-2">
+        <button class="movie-item btn btn-primary btn-block" data-name="hannibal">Hannibal</button>
+    </div>
+    <br>
+    <br>
+
+    <!-- Location for food items to be placed after being retrieved from Firebase -->
+    <h4>Food List:</h4>
+    <div class="container" id="food-list">
+
+
+    </div>
+
+    <br>
+    <br>
+
+    <!-- Add a food form -->
+
+
+    <div class="form-group">
+        <label for="input-name">Foods</label>
+        <input type="text" class="form-control" id="input-name" aria-describedby="trainName">
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+    <br>
+    <br>
+    </form>
+    <!-- Scripts -->
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+    <!-- Moment.js Library -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        //JS Setup Functions (Firebase, etc) 
+        //=================================
+
+
+        $(document).ready(function () {
+
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAG3W2hu-w6A91MAS41_ursXlSyXf4W6Kk",
+                authDomain: "movie-food-database.firebaseapp.com",
+                databaseURL: "https://movie-food-database.firebaseio.com",
+                projectId: "movie-food-database",
+                storageBucket: "",
+                messagingSenderId: "815938672043"
+            };
+
+            //Global Vars 
+            //=================================
+
+            firebase.initializeApp(config);
+
+            //Used for firebase
+            var database;
+
+            var refMovies;
+            var addedFood;
+            var uniqueToggle = false;
+
+            // //Check if Firebase is Working
+            // console.log(firebase);
+
+            //set database to the firebase database
+            database = firebase.database();
+
+
+            /*Example of Pushing Data to a Specific Firebase Location */
+            //==========================================================
+
+            // var movieName = "hannibal";
+
+            // Used for accessing the 'movies' data node in Firebase
+
+            // var refMovies = database.ref('movies/' + movieName);
+
+            // Create an example of data I want to push
+            // var foodData = {
+            //     food: "steel cut oats"
+            // }
+
+            // Push object data to the /movies location in Firebase
+            // refMovies.push(foodData);
+
+            //============================================================
+
+
+
+            //Scenario:  From the list of movies, a movie row is clicked- we grab something from there that contains the movie name and we  1. pulls up the Firebase list of foods under that movie name, clear and refresh a local array of those foods for our own reference and create an 'add food form' that has a button with a data-name attribute that that matches the movie that was just selected.  
+
+            //On Click event for movie list line-item
+            $("body").on("click", ".movie-item", function () {
+
+                //Get name of movie from movie data attribute
+                var movieName = $(this).attr("data-name");
+
+                //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
+                $("#submit-button").attr("data-name", movieName);
+
+                //Get Target Firebase Location- we want the specific movie
+                refMovies = database.ref('movies/' + movieName);
+
+                //Firebase function - call firebase and spit out food data onto the page for THIS movie
+                refMovies.on('value', pullFirebaseData, firebaseErrorData);
+
+
+            });
+
+
+            //ADDING FOOD ITEM TO FIREBASE  (FORM SUBMIT)
+            //============================================
+
+            $("body").on("click", "#submit-button", function (event) {
+                event.preventDefault();
+
+                uniqueToggle = false;
+
+                //Get Form Input Value
+                var $foodInput = $("#input-name");
+
+                //Get current moviename from submit button (was passed here after clicking a movie name)
+                var movieName = $("#submit-button").attr("data-name");
+
+                //Get input text from form
+                addedFood = $foodInput.val();
+
+                //Clear out form text input after submitting
+                $foodInput.val("");
+
+                //Shape the data we want to push to Firebase
+                var foodData = {
+                    food: addedFood
+                }
+
+                //Get Target Firebase Location- we want the specific movie object 
+                var refMovies = database.ref('movies/' + movieName);
+
+
+                //Check database to make sure food isn't already added
+                refMovies.on('value', checkForDuplicateFood, firebaseErrorData);
+
+                if (uniqueToggle) {
+                    console.log("it's unique!");
+                    //Push Food info to Specific Movie location in Firebase
+                    refMovies.push(foodData);
+                    //Clear and refresh the current food list
+                    refMovies.on('value', pullFirebaseData, firebaseErrorData);
+
+                } else {
+                    console.log("That food has already been added!");
+                    //create a bootstrap alert at top of page notifying user that the input food already exists
+                }
+
+
+
+
+            });
+
+
+            //Get list of foods from Firebase! (data parameter is a reference to the Firebase )
+            //==================================
+            function pullFirebaseData(data) {
+
+                //Clear out the food list container each time this function is called 
+                $("#food-list").empty();
+
+                //Retrieve Firebase food data for the specific movie that was passed into the function
+                var foodObject = data.val();
+                var keys = Object.keys(foodObject);
+
+
+                //Append food items to html and local array
+                for (var i = 0; i < keys.length; i++) {
+
+                    //Create HTML Object to contain the food item
+                    var foodButton = $("<button>");
+                    foodButton.addClass("btn btn-success btn-block mr-2 recipe-item");
+
+                    //Get object key (there is always key above the data we want)
+                    var k = keys[i];
+                    //Get the specific food value at this key
+                    var foodItem = foodObject[k].food;
+                    //Append to html food list container
+                    foodButton.text(foodItem);
+                    $("#food-list").append(foodButton);
+                }
+
+            }
+
+            //Check if item exists in Firebase food list
+            //===========================================
+            function checkForDuplicateFood(data) {
+                console.log("checking for duplicates...");
+                console.log("Input food was: ", addedFood);
+                //Retrieve Firebase food data for the specific movie that was passed into the function
+                var foodObject = data.val();
+                var keys = Object.keys(foodObject);
+
+                for (var i = 0; i < keys.length; i++) {
+                    var k = keys[i];
+                    var foodItem = foodObject[k].food;
+                    console.log("current food item", foodItem);
+                    if (addedFood == foodItem) {
+                        console.log("A:", addedFood);
+                        console.log("B:", foodItem);
+                        uniqueToggle = false;
+                        return;
+                    }
+                }
+                uniqueToggle = true;
+            }
+
+
+
+            //Firebase Error Function
+            function firebaseErrorData(err) {
+                console.log("Error!");
+                console.log(err);
+            }
+
+
+        });
+    </script>
+
+
+</body>
+
+</html>
