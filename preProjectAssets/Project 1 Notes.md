@@ -12,12 +12,12 @@ This is a group project for the University of Minnesota Coding Bootcamp Cohort 4
 + Set movie radio button as default radio button - Robyn Craig
 
 #### **Page 2:** 
-+ Hide first page search card after user hits submit - Kalsang Bhutia
++ ~~Hide first page search card after user hits submit - Kalsang Bhutia~~
 + Set IMG size to be smaller -
-    + Search for thumbnail image in API doc to replace the current poster img - Kalsang Bhutia 
+    + ~~Search for thumbnail image in API doc to replace the current poster img - Kalsang Bhutia~~ 
     + If thumbnail doesn't exist style each image to a preset height and width. - Robyn Craig 
 + Adjust text styling sizes of title and plot - Robyn Craig
-+ Movie rows need to become buttons (see Zac's firebase example- add in ) - Kalsang Bhutia
++ ~~Movie rows need to be clickable (see Zac's firebase example- add in ) - Kalsang Bhutia~~
 + Clear search and clear result - Kalsang Bhutia
 + Limit results to five or ten in API call - Kalsang Bhutia
 + Fix search and remove radio buttons - Robyn Craig
