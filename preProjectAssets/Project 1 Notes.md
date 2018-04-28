@@ -2,6 +2,49 @@
 ====
 This is a group project for the University of Minnesota Coding Bootcamp Cohort 4. 
 
+<https://zackeilholz.github.io/CineMunchies/>
+
+
+## **Bug List 4/28/18**
+### **Front-End**
+#### **Page 1:**
++ Clean up HTML ids and classes - Robyn Craig
++ Set movie radio button as default radio button - Robyn Craig
+
+#### **Page 2:** 
++ Hide first page search card after user hits submit - Kalsang Bhutia
++ Set IMG size to be smaller -
+    + Search for thumbnail image in API doc to replace the current poster img - Kalsang Bhutia 
+    + If thumbnail doesn't exist style each image to a preset height and width. - Robyn Craig 
++ Adjust text styling sizes of title and plot - Robyn Craig
++ Movie rows need to become buttons (see Zac's firebase example- add in ) - Kalsang Bhutia
++ Clear search and clear result - Kalsang Bhutia
++ Limit results to five or ten in API call - Kalsang Bhutia
++ Fix search and remove radio buttons - Robyn Craig
+
+#### **Page 3:**
++ create the page 3 container for Zac to work with. 
+
+#### **Page 4:**
++ Add in Food API calls - Zac/Kalsang
+
+### **Back-End**
+#### **Page 3:**
++ Merge in the firebase code into the master branch - Zac Keilholz
++ Fix case-sensitivity when inputing the foods into the movie-food list
+
+# **Goal for End of Class:**
+
+#### **Complete pages 1-3** 
+
+# **Stretch Goal:**
+
+#### **Get page 4 working**
+
+# **By Monday**
+## **Goals**
+#### **1: Talk about UI**
+#### **2: Come ready with list of libraries to intertwine with the project**
 ### **The group project must meet these requirements:**
 + Must use at least two APIs (AJAX)  
 <https://github.com/toddmotto/public-apis>
