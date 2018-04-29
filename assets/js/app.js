@@ -10,10 +10,6 @@
 
 $(document).ready(function () {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
- 
-  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed. 
-  $("#first-page-search").show();
-  $("#second-page-search,#third-container,#movie-results-container").hide();
 
   // Initialize Firebase
   var config = {
@@ -127,7 +123,6 @@ $(document).ready(function () {
 
     //Retrieve Firebase food data for the specific movie that was passed into the function
     var foodObject = data.val();
-    var keys = Object.keys(foodObject);
 
 
     //Append food items to html and local array
@@ -198,31 +193,26 @@ $(document).ready(function () {
   // when form is submitted the API call will be made
 
 
-  $("#search-form").on("submit", function (event) {
+  $(".search-form").on("submit", function (event) {
     event.preventDefault();
     $("tbody").empty();
     var apiKey = "39a2a8a2";
-<<<<<<< Updated upstream
-
-    var $search = $(".search-input").val();
-=======
-    var $searchMain = $("#search-input").val();
-    var $searchAgain=$("#search-again-input").val();
-    var $search="";
+    var searchMain = $("#search-input").val();
+    var searchAgain=$("#search-again-input").val();
+    var search="";
     var $secondSearch=$("#second-search-form");
     var isVisible=$secondSearch.is(':visible');
-    console.log($search);
+    console.log(search);
 
-    if(isVisible === true){
-      $search=$searchMain;
+    if(isVisible){
+      search=searchAgain;
     } else{
-      $search=$searchAgain;
+      search=searchMain;
     }
 
->>>>>>> Stashed changes
     var omdbURL =
       "https://www.omdbapi.com/?t=" +
-      $search +
+      search +
       "&y=&plot=short&apikey=" +
       apiKey;
 
