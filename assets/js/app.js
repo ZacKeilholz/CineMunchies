@@ -7,8 +7,7 @@
 //MAIN FUNCTION
 //==================================
 
-
-$(document).ready(function () {
+$(document).ready(function() {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
 
   // Initialize Firebase
@@ -21,7 +20,7 @@ $(document).ready(function () {
     messagingSenderId: "815938672043"
   };
 
-  //Global Vars 
+  //Global Vars
   //=================================
 
   firebase.initializeApp(config);
@@ -42,8 +41,7 @@ $(document).ready(function () {
   //======================
 
   //On Click event for movie list line-item
-  $("body").on("click", ".movie-item", function () {
-
+  $("body").on("click", ".movie-item", function() {
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
 
@@ -51,16 +49,15 @@ $(document).ready(function () {
     $("#submit-button").attr("data-name", movieName);
 
     //Get Target Firebase Location- we want the specific movie
-    refMovies = database.ref('movies/' + movieName);
+    refMovies = database.ref("movies/" + movieName);
 
     //Firebase function - call firebase and spit out food data onto the page for THIS movie
-    refMovies.on('value', pullFirebaseData, firebaseErrorData);
-
+    refMovies.on("value", pullFirebaseData, firebaseErrorData);
   });
 
   //ADDING NEW FOOD ITEM TO FIREBASE (FORM SUBMIT)
 
-  $("body").on("click", "#add-food-submit", function (event) {
+  $("body").on("click", "#add-food-submit", function(event) {
     event.preventDefault();
 
     uniqueToggle = false;
@@ -80,45 +77,40 @@ $(document).ready(function () {
     //Shape the data we want to push to Firebase
     var foodData = {
       food: addedFood
-    }
+    };
 
-    //Get Target Firebase Location- we want the specific movie object 
-    var refMovies = database.ref('movies/' + movieName);
-
+    //Get Target Firebase Location- we want the specific movie object
+    var refMovies = database.ref("movies/" + movieName);
 
     //Check database to make sure food isn't already added
-    refMovies.on('value', checkForDuplicateFood, firebaseErrorData);
+    refMovies.on("value", checkForDuplicateFood, firebaseErrorData);
 
     if (uniqueToggle) {
       console.log("it's unique!");
       //Push Food info to Specific Movie location in Firebase
       refMovies.push(foodData);
       //Clear and refresh the current food list
-      refMovies.on('value', pullFirebaseData, firebaseErrorData);
-
+      refMovies.on("value", pullFirebaseData, firebaseErrorData);
     } else {
       console.log("That food has already been added!");
       //create a bootstrap alert at top of page notifying user that the input food already exists
     }
 
-    //Testing to see if this movie has a database entry at all- and pushing data to it if not. 
+    //Testing to see if this movie has a database entry at all- and pushing data to it if not.
     //Check if database entry exists
-    refMovies.once("value")
-      .then(function (snapshot) {
-        var a = snapshot.exists(); // true
-        if (!a) {
-          refMovies.push(foodData);
-          refMovies.on('value', pullFirebaseData, firebaseErrorData);
-
-        }
-      });
+    refMovies.once("value").then(function(snapshot) {
+      var a = snapshot.exists(); // true
+      if (!a) {
+        refMovies.push(foodData);
+        refMovies.on("value", pullFirebaseData, firebaseErrorData);
+      }
+    });
   });
 
   //Get list of foods from Firebase! (data parameter is a reference to the Firebase )
   //==================================
   function pullFirebaseData(data) {
-
-    //Clear out the food list container each time this function is called 
+    //Clear out the food list container each time this function is called
     $("#food-list").empty();
 
     //Retrieve Firebase food data for the specific movie that was passed into the function
@@ -127,9 +119,6 @@ $(document).ready(function () {
 
     //Append food items to html and local array
     for (var i = 0; i < keys.length; i++) {
-
-
-
       //Get object key (there is always key above the data we want)
       var k = keys[i];
       //Get the specific food value at this key
@@ -148,13 +137,11 @@ $(document).ready(function () {
   //Check if item exists in Firebase food list
   //===========================================
   function checkForDuplicateFood(data) {
-
     console.log("checking for duplicates...");
     console.log("Input food was: ", addedFood);
     //Retrieve Firebase food data for the specific movie that was passed into the function
     var foodObject = data.val();
     var keys = Object.keys(foodObject);
-
 
     for (var i = 0; i < keys.length; i++) {
       var k = keys[i];
@@ -178,8 +165,14 @@ $(document).ready(function () {
 
   //MOVIE REQUEST API
   //=============================================
+  //Fixing the API limit bug is a little more difficult.
+  //The way the API objects are written, the title query ("?t=") looks up one exact title only which is why we only ever had one result previously.
+  //The search query("?s=") looks up everything that has the search term included but the objects in the array do not include the short plot.
+  //I will have to call the movie API multiple times:
+  // Once to grab the array of matching titles with the 5 title limit we decided on (using "?s=" in the query).
+  //Then I need to loop over the array and call the API for each title in order to grab the short plots using "?t=" in the query.
 
-  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
+  //NOTE: Switch these default show/hide methods to CSS set display to none after functionality problems are fixed.
   $("#first-page-search").show();
   $("#second-page-search,#third-container,#movie-results-container").hide();
 
@@ -188,81 +181,97 @@ $(document).ready(function () {
     console.log($(this).attr("data-name"));
   });
 
-  // when form is submitted the API call will be made
+  //  the API call will be made when form is submitted
 
-  $(".search-form").on("submit", function (event) {
+  $(".search-form").on("submit", function(event) {
     event.preventDefault();
     $("tbody").empty();
     var apiKey = "39a2a8a2";
     var searchMain = $("#search-input").val();
-    var searchAgain=$("#search-again-input").val();
-    var search="";
-    var $secondSearch=$("#second-search-form");
-    var isVisible=$secondSearch.is(':visible');
-    console.log(search);
+    var searchAgain = $("#search-again-input").val();
+    var search = "";
+    var $secondSearch = $("#second-search-form");
+    var isVisible = $secondSearch.is(":visible");
+    var titleSearch = "?t=";
+    var movieSearch = "?s=";
 
-    if(isVisible){
-      search=searchAgain;
-    } else{
-      search=searchMain;
+    if (isVisible) {
+      search = searchAgain;
+    } else {
+      search = searchMain;
     }
-
     var omdbURL =
-      "https://www.omdbapi.com/?t=" +
-      search +
-      "&y=&plot=short&apikey=" +
-      apiKey;
+      "https://www.omdbapi.com/" + movieSearch + search + "&apikey=" + apiKey;
 
     var edamamURL = "";
     var queryURL = "";
+
     // The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
     if ($("#customRadioInline1").is(":checked")) {
       queryURL = omdbURL;
     } else if ($("#customRadioInline2").is(":checked")) {
       queryURL = edamamURL;
     } else {
-      //form validation
+      //form validation 
+      $(".search-clear").html("Please select movie or food");
     }
+
     $.ajax({
       url: queryURL,
       method: "GET"
-
-    }).then(function(response) {
+    }).then(function(broadResponse) {
       //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
-$("#search-again-input").val("").empty();
+      $("#search-again-input")
+        .val("")
+        .empty();
       $("#first-page-search").hide();
       $("#second-page-search,#movie-results-container").show();
-      var data = response;
-      console.log(data);
+      var data = broadResponse.Search;
+      console.log(data.Title);
+      var limitedData = data.slice(0, 5);
+      console.log(limitedData);
+      console.log(limitedData.Title);
 
-      //this conditional is in preparation for future reverse search functionality
+      for (i = 0; i < limitedData.length; i++) {
+        console.log(data[i]);
+        var exactSearch = limitedData[i].Title;
+        omdbURL =
+          "https://www.omdbapi.com/" +
+          titleSearch +
+          exactSearch +
+          "&y=&plot=short&apikey=" +
+          apiKey;
+        var limitURL = omdbURL;
+        console.log(limitURL);
+        $.ajax({
+          url: limitURL,
+          method: "GET"
+        }).then(function(titleResponse) {
+          var $newMovie = $("<tr>");
 
-      if ((queryURL = omdbURL)) {
-        var $newMovie = $("<tr>");
+          //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
 
-      //prepping the data to go into firebase database with hypens instead of spaces in movie titles
+          var titleClean = exactSearch;
+          titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
+          console.log(titleClean);
+          $newMovie.addClass("movie-item").attr("data-name", titleClean);
 
-        var titleClean=data.Title;
-        titleClean=titleClean.replace(/\s+/g,"-").toLowerCase();
-        console.log(titleClean);
-        $newMovie.addClass("movie-item").attr("data-name",titleClean);
+          //filling in the columns with the relevant information from each object in the limitedData array
 
-
-        $newMovie
-          .append(`<td scope="row">${data.Title}</td>`)
-          .append(`<td scope="row">${data.Plot}</td>`)
-          .append(`<td scope="row"><img src=${data.Poster}></td>`);
-        $("tbody").prepend($newMovie);
-      } else {
-        //Writing this code out in case we get to the reverse search features
-        // var newRecipe = $("<tr>");
-        // newRecipe
-        //   .append(`<td scope="row">${data}</td>`)
-        //   .append(`<td scope="row">${data}</td>`)
-        //   .append(`<td scope="row"><img src=${data}></td>`);
-        // $("tbody").prepend(newMovie);
+          $newMovie
+            .append(`<td scope="row">${titleResponse.Title}</td>`)
+            .append(`<td scope="row">${titleResponse.Plot}</td>`)
+            .append(`<td scope="row"><img src=${titleResponse.Poster}></td>`);
+          $("tbody").append($newMovie);
+        });
       }
-  
-    });  
+    });
   });
+  //Writing this code out in case we get to the reverse search features
+  // var newRecipe = $("<tr>");
+  // newRecipe
+  //   .append(`<td scope="row">${data}</td>`)
+  //   .append(`<td scope="row">${data}</td>`)
+  //   .append(`<td scope="row"><img src=${data}></td>`);
+  // $("tbody").prepend(newRecipe);
 });
