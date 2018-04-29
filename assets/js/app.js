@@ -10,10 +10,6 @@
 
 $(document).ready(function () {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
- 
-  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed. 
-  $("#first-page-search").show();
-  $("#second-page-search,#third-container,#movie-results-container").hide();
 
   // Initialize Firebase
   var config = {
@@ -129,7 +125,6 @@ $(document).ready(function () {
     var foodObject = data.val();
     var keys = Object.keys(foodObject);
 
-
     //Append food items to html and local array
     for (var i = 0; i < keys.length; i++) {
 
@@ -184,9 +179,6 @@ $(document).ready(function () {
   //MOVIE REQUEST API
   //=============================================
 
-
-
-
   //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
   $("#first-page-search").show();
   $("#second-page-search,#third-container,#movie-results-container").hide();
@@ -198,16 +190,26 @@ $(document).ready(function () {
 
   // when form is submitted the API call will be made
 
-
-  $("#search-form").on("submit", function (event) {
+  $(".search-form").on("submit", function (event) {
     event.preventDefault();
     $("tbody").empty();
     var apiKey = "39a2a8a2";
+    var searchMain = $("#search-input").val();
+    var searchAgain=$("#search-again-input").val();
+    var search="";
+    var $secondSearch=$("#second-search-form");
+    var isVisible=$secondSearch.is(':visible');
+    console.log(search);
 
-    var $search = $(".search-input").val();
+    if(isVisible){
+      search=searchAgain;
+    } else{
+      search=searchMain;
+    }
+
     var omdbURL =
       "https://www.omdbapi.com/?t=" +
-      $search +
+      search +
       "&y=&plot=short&apikey=" +
       apiKey;
 
@@ -227,15 +229,19 @@ $(document).ready(function () {
 
     }).then(function(response) {
       //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
-
+$("#search-again-input").val("").empty();
       $("#first-page-search").hide();
       $("#second-page-search,#movie-results-container").show();
       var data = response;
       console.log(data);
 
       //this conditional is in preparation for future reverse search functionality
+
       if ((queryURL = omdbURL)) {
         var $newMovie = $("<tr>");
+
+      //prepping the data to go into firebase database with hypens instead of spaces in movie titles
+
         var titleClean=data.Title;
         titleClean=titleClean.replace(/\s+/g,"-").toLowerCase();
         console.log(titleClean);
@@ -256,6 +262,7 @@ $(document).ready(function () {
         //   .append(`<td scope="row"><img src=${data}></td>`);
         // $("tbody").prepend(newMovie);
       }
-    });
+  
+    });  
   });
 });
