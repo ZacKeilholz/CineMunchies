@@ -202,8 +202,24 @@ $(document).ready(function () {
     event.preventDefault();
     $("tbody").empty();
     var apiKey = "39a2a8a2";
+<<<<<<< Updated upstream
 
     var $search = $(".search-input").val();
+=======
+    var $searchMain = $("#search-input").val();
+    var $searchAgain=$("#search-again-input").val();
+    var $search="";
+    var $secondSearch=$("#second-search-form");
+    var isVisible=$secondSearch.is(':visible');
+    console.log($search);
+
+    if(isVisible === true){
+      $search=$searchMain;
+    } else{
+      $search=$searchAgain;
+    }
+
+>>>>>>> Stashed changes
     var omdbURL =
       "https://www.omdbapi.com/?t=" +
       $search +
