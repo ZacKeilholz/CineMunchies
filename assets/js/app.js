@@ -98,13 +98,15 @@ $(document).ready(function () {
   database = firebase.database();
 
 
-  //Firebase Events
+  //FIREBASE
   //======================
+
+  //Firebase- TRENDING
 
   //Set Firebase Trending Database Location
   var refTrending = database.ref('trending/movies');
 
-
+  //Create Event Listener for any changes in the Trending Database
   refTrending.on('value', retrieveFirebaseTrending, firebaseErrorData);
 
   //Uncomment this and use to remake database if trendData is deleted- (code will not function otherwise)..  Add this into a check function at some point:
@@ -114,28 +116,26 @@ $(document).ready(function () {
   // refTrending.push(trendData);
 
 
-  //On page-load, fill trending container with items from Firebase Trending 
-  //retrieveFirebaseTrending();
-  //Firebase function - call firebase and spit out food data onto the page for THIS movie
+  //This function retrieves the last 10 movies that were searched for and subsequently clicked on from the Firebase/Trending folder in the database and then inserts them onto page 1 as table rows.  
 
   function retrieveFirebaseTrending(data) {
-    console.log("Retrieving Trend List");
-    // Clear out the food list container each time this function is called
+
+    // Clear out the trend list container each time this function is called
     $("#trend-list").empty();
 
-    //Retrieve Firebase food data for the specific movie that was passed into the function
+    //Retrieve Firebase Movie trend data
     var trendObject = data.val();
-    console.log("trendobject", trendObject);
     var keys = Object.keys(trendObject);
-    //Append food items to html and local array
+
+    //Grab length of the trend list for use in the for loop 
     var highKeysLength = (keys.length)-1;
+
+    //For loop grabs searches from the END of the list and works back 10 items and displays them on page 1.  
     for (var i = highKeysLength; i > highKeysLength-10; i--) {
       console.log("keys!");
       var k = keys[i];
       //Get the specific food value at this key
       var trendItem = trendObject[k].movieName;
-
-      console.log(trendItem);
 
       //Create HTML Object to contain the food item
       var $newRow = $("<tr>");
@@ -150,17 +150,16 @@ $(document).ready(function () {
       //Append to html food list container- use unclean version (swap hyphens for spaces)
       $trendListItem.text(nameUnclean(trendItem));
 
-
       $newRow.append($trendListItem);
       $("#trend-list").append($newRow);
     }
   }
 
+  //MOVIE SEARCH RESULT OR FIREBASE TRENDING ITEM HAS BEEN CLICKED: 
+  //================================================================
 
-
-  //On Click event for movie list or trending movie item
   $("body").on("click", ".movie-item,.trend-item", function () {
-    console.log("clicked");
+
     //Show/Hide Containers
     showHideSwitch(3);
 
@@ -193,7 +192,7 @@ $(document).ready(function () {
       });
 
 
-    //Add selected movie to Firebase Trending List
+    //Add clicked movie to Firebase Trending List (This also adds a clicked trend onto the trend list)
     trendData = {
       movieName: nameClean(movieName)
     }
@@ -202,6 +201,7 @@ $(document).ready(function () {
   });
 
   //ADDING NEW FOOD ITEM TO FIREBASE (FORM SUBMIT)
+  //================================================
 
   $("body").on("click", "#add-food-submit", function (event) {
     event.preventDefault();
