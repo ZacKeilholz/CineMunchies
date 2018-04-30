@@ -1,7 +1,9 @@
 //Global Vars
 //=================================
 
-//Helper Functions
+var apiKey = "39a2a8a2";
+
+//Jquery HTML Targets
 //=================================
 
 //Use this switch case for showing/hiding containers when pages change during on-click events
@@ -258,86 +260,65 @@ $(document).ready(function () {
   $(".search-form").on("submit", function(event) {
     event.preventDefault();
     $("tbody").empty();
-    var apiKey = "39a2a8a2";
-    var searchMain = $("#search-input").val();
-    var searchAgain = $("#search-again-input").val();
-    var search = "";
-    var $secondSearch = $("#second-search-form");
-    var isVisible = $secondSearch.is(':visible');
-
-
-    if (isVisible) {
-      search = searchAgain;
-    } else {
-      search = searchMain;
-    }
-    var omdbURL =
-      "https://www.omdbapi.com/" + movieSearch + search + "&apikey=" + apiKey;
-
-    var edamamURL = "";
-    var queryURL = "";
-
-    // The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
-    if ($("#customRadioInline1").is(":checked")) {
-      queryURL = omdbURL;
-    } else if ($("#customRadioInline2").is(":checked")) {
-      queryURL = edamamURL;
-    } else {
-      //form validation 
-      $(".search-clear").html("Please select movie or food");
-    }
-
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(broadResponse) {
-      //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
-      $("#search-again-input")
-        .val("")
-        .empty();
-      $("#first-page-search").hide();
-      $("#second-page-search,#movie-results-container").show();
-      var data = broadResponse.Search;
-      console.log(data.Title);
-      var limitedData = data.slice(0, 5);
-      console.log(limitedData);
-      console.log(limitedData.Title);
-
-      for (i = 0; i < limitedData.length; i++) {
-        console.log(data[i]);
-        var exactSearch = limitedData[i].Title;
-        omdbURL =
-          "https://www.omdbapi.com/" +
-          titleSearch +
-          exactSearch +
-          "&y=&plot=short&apikey=" +
-          apiKey;
-        var limitURL = omdbURL;
-        console.log(limitURL);
-        $.ajax({
-          url: limitURL,
-          method: "GET"
-        }).then(function(titleResponse) {
-          var $newMovie = $("<tr>");
-
-          //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
-
-          var titleClean = exactSearch;
-          titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
-          console.log(titleClean);
-          $newMovie.addClass("movie-item").attr("data-name", titleClean);
-
-          //filling in the columns with the relevant information from each object in the limitedData array
-
-          $newMovie
-            .append(`<td scope="row">${titleResponse.Title}</td>`)
-            .append(`<td scope="row">${titleResponse.Plot}</td>`)
-            .append(`<td scope="row"><img src=${titleResponse.Poster}></td>`);
-          $("tbody").append($newMovie);
-        });
-      }
-    });
+    var search = getSearchValue();
+    doSearch(search);
   });
+});
+
+
+//Global API/Search functions that feed into the $(".search-form").on("submit") event handler.
+//=======================================================
+function doSearch(search) {
+  var queryURL = getQueryURL(search);
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(populateTable);
+}
+
+function populateTable(searchResponse) {
+  //show hide containers
+  showHideSwitch(2);
+
+  $("#search-again-input").val("");
+
+  var data = searchResponse.Search;
+  var limitedData = data.slice(0, 5);
+  for (i = 0; i < limitedData.length; i++) {
+    console.log(data[i]);
+    fetchMovieDetails(limitedData);
+  }
+}
+
+function fetchMovieDetails(limitedData) {
+  var exactSearch = limitedData[i].Title;
+ 
+  var limitURL =
+    "https://www.omdbapi.com/?t=" +
+    exactSearch +
+    "&y=&plot=short&apikey=" +
+    apiKey;
+  console.log(limitURL);
+  $.ajax({
+    url: limitURL,
+    method: "GET"
+  }).then(populateMovieRow);
+}
+function populateMovieRow(titleResponse) {
+  var $newMovie = $("<tr>");
+
+   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
+  var titleClean=titleResponse.Title;
+  titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
+  console.log(titleClean);
+  $newMovie.addClass("movie-item").attr("data-name", titleClean);
+
+  //filling in the columns with the relevant information from each object in the limitedData array
+  $newMovie
+    .append(`<td scope="row">${titleResponse.Title}</td>`)
+    .append(`<td scope="row">${titleResponse.Plot}</td>`)
+    .append(`<td scope="row"><img src=${titleResponse.Poster}></td>`);
+  $("tbody").append($newMovie);
   //Writing this code out in case we get to the reverse search features
   // var newRecipe = $("<tr>");
   // newRecipe
@@ -345,4 +326,32 @@ $(document).ready(function () {
   //   .append(`<td scope="row">${data}</td>`)
   //   .append(`<td scope="row"><img src=${data}></td>`);
   // $("tbody").prepend(newRecipe);
-});
+}
+
+function getQueryURL(search) {
+  var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
+  var edamamURL = "";
+  var queryURL = "";
+  // The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
+  if ($("#customRadioInline1").is(":checked")) {
+    queryURL = omdbURL;
+  } else if ($("#customRadioInline2").is(":checked")) {
+    queryURL = edamamURL;
+  } else {
+    //form validation
+    $(".search-clear").html("Please select movie or food");
+  }
+  return queryURL;
+}
+
+function getSearchValue() {
+  var search;
+  var isVisible = $("#second-search-form").is(":visible");
+  //this logic decides which search input to grab values from for the API call
+  if (isVisible) {
+    search = $("#search-again-input").val();
+  } else {
+    search = $("#search-input").val();
+  }
+  return search;
+}
