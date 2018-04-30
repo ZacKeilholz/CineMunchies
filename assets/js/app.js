@@ -28,7 +28,8 @@ function showHideSwitch(param) {
 
     //Page 3 - Movie search result or trending movie  has been clicked
     case (3):
-      $("#first-page-search,#second-page-search,#movie-results-container").hide();
+    console.log("HIDING PAGE 1-2");
+      $("#first-page-search,#second-container").hide();
       $("#third-container").show();
 
       break;
@@ -159,7 +160,7 @@ $(document).ready(function () {
   //================================================================
 
   $("body").on("click", ".movie-item,.trend-item", function () {
-
+    console.log("MOVIE ITEM CLICKED");
     //Show/Hide Containers
     showHideSwitch(3);
 
@@ -326,7 +327,7 @@ $(document).ready(function () {
 
   $(".search-form").on("submit", function (event) {
     event.preventDefault();
-    $("tbody").empty();
+    $("#movie-results-tbody").empty();
     var search = getSearchValue();
     doSearch(search);
   });
@@ -352,7 +353,6 @@ function populateTable(searchResponse) {
   var data = searchResponse.Search;
   var limitedData = data.slice(0, 5);
   for (i = 0; i < limitedData.length; i++) {
-    console.log(data[i]);
     fetchMovieDetails(limitedData);
   }
 }
@@ -365,7 +365,6 @@ function fetchMovieDetails(limitedData) {
     exactSearch +
     "&y=&plot=short&apikey=" +
     apiKey;
-  console.log(limitURL);
   $.ajax({
     url: limitURL,
     method: "GET"
@@ -377,7 +376,7 @@ function populateMovieRow(titleResponse) {
   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
   var titleClean = titleResponse.Title;
   titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
-  console.log(titleClean);
+
   $newMovie.addClass("movie-item").attr("data-name", titleClean);
 
   //filling in the columns with the relevant information from each object in the limitedData array
@@ -385,7 +384,7 @@ function populateMovieRow(titleResponse) {
     .append(`<td scope="row">${titleResponse.Title}</td>`)
     .append(`<td scope="row">${titleResponse.Plot}</td>`)
     .append(`<td scope="row"><img src=${titleResponse.Poster}></td>`);
-  $("tbody").append($newMovie);
+  $("#movie-results-tbody").append($newMovie);
   //Writing this code out in case we get to the reverse search features
   // var newRecipe = $("<tr>");
   // newRecipe
