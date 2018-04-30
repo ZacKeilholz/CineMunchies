@@ -201,12 +201,15 @@ $(document).ready(function () {
       console.log("food item:" , foodItem);
       console.log(nameClean(foodItem));
       //Create HTML Object to contain the food item
-      var $foodListItem = $("<li>");
+      var $newRow = $("<tr>");
+      var $foodListItem = $("<td>");
       $foodListItem.addClass("food-item");
       $foodListItem.attr("data-name", nameClean(foodItem));
       //Append to html food list container
       $foodListItem.text(foodItem);
-      $("#food-list").append($foodListItem);
+
+      $newRow.append($foodListItem);
+      $("#food-list").append($newRow);
     }
   }
 
