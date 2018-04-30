@@ -90,9 +90,10 @@ $(document).ready(function () {
 
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
+    console.log("Current Movie Name: ",movieName);
 
     //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
-    $("#submit-button").attr("data-name", movieName);
+    $("#add-food-submit").attr("data-name", movieName);
 
     //Get Target Firebase Location- we want the specific movie
     refMovies = database.ref('movies/' + movieName);
