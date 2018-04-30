@@ -51,6 +51,12 @@ function nameClean(textInput) {
 
 };
 
+//Name UnCleaner Function - Converts hyphenated name to spaced name for pretty html use
+function nameUnclean(textInput) {
+
+ return textInput.replace("-", " ");
+
+};
 //MAIN FUNCTION
 //==================================
 
@@ -198,15 +204,20 @@ $(document).ready(function () {
       var k = keys[i];
       //Get the specific food value at this key
       var foodItem = foodObject[k].food;
-      console.log("food item:" , foodItem);
-      console.log(nameClean(foodItem));
+  
       //Create HTML Object to contain the food item
       var $newRow = $("<tr>");
       var $foodListItem = $("<td>");
-      $foodListItem.addClass("food-item");
+
+      //Adds Selector Class for Page 4 Recipe API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' food data
+      $foodListItem.addClass("food-item text-capitalize");
+
+      //Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
       $foodListItem.attr("data-name", nameClean(foodItem));
-      //Append to html food list container
-      $foodListItem.text(foodItem);
+
+      //Append to html food list container- use unclean version (swap hyphens for spaces)
+      $foodListItem.text(nameUnclean(foodItem));
+
 
       $newRow.append($foodListItem);
       $("#food-list").append($newRow);
