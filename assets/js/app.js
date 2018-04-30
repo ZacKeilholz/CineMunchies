@@ -1,49 +1,58 @@
 //Global Vars
 //=================================
 
-//Jquery HTML Targets
+//Helper Functions
 //=================================
+
+//Use this switch case for showing/hiding containers when pages change during on-click events
+function showHideSwitch(param) {
+  switch (param) {
+    
+    //Page 1 Initial Search page
+    case (1):
+    $("#first-page-search").show();
+    $("#second-page-search,#third-container,#movie-results-container").hide();
+    
+    
+    break;
+    
+    //Page 2- Movie search input has been entered and submitted
+    case (2):
+    
+    $("#first-page-search").hide();
+    $("#second-page-search,#movie-results-container").show();
+    
+    break;
+    
+    //Page 3 - Movie search result has been clicked
+    case (3):
+    $("#second-page-search,#movie-results-container").hide();
+    $("#third-container").show();
+    
+    break;
+    
+    //Page 4 - Food result has been clicked
+    case (4):
+    
+    break;
+    
+    
+    
+    default:
+    break;
+  }
+}
+
+
+//Name Cleaner Function - Converts upper to lower case and swaps spaces for hyphens:
+function nameClean(textInput) {
+
+ return textInput.replace(/\s+/g, "-").toLowerCase();
+
+};
 
 //MAIN FUNCTION
 //==================================
-
-function showHideSwitch(param) {
-  switch (param) {
-
-    //Page 1 Initial Search page
-    case (1):
-      $("#first-page-search").show();
-      $("#second-page-search,#third-container,#movie-results-container").hide();
-
-
-      break;
-
-    //Page 2- Movie search input has been entered and submitted
-    case (2):
-
-      $("#first-page-search").hide();
-      $("#second-page-search,#movie-results-container").show();
-
-      break;
-
-    //Page 3 - Movie search result has been clicked
-    case (3):
-      $("#second-page-search,#movie-results-container").hide();
-      $("#third-container").show();
-
-      break;
-
-    //Page 4 - Food result has been clicked
-    case (4):
-
-      break;
-
-
-
-    default:
-      break;
-  }
-}
 
 $(document).ready(function () {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
@@ -292,8 +301,7 @@ $(document).ready(function () {
 
         //prepping the data to go into firebase database with hypens instead of spaces in movie titles
 
-        var titleClean = data.Title;
-        titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
+        var titleClean = nameClean(data.Title);
         $newMovie.addClass("movie-item").attr("data-name", titleClean);
 
 
