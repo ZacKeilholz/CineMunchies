@@ -40,7 +40,6 @@ function showHideSwitch(param) {
       break;
 
 
-
     default:
       break;
   }
