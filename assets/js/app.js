@@ -35,8 +35,8 @@ function showHideSwitch(param) {
 
     //Page 4 - Food result has been clicked
     case (4):
- 
-    break;
+
+      break;
 
 
 
@@ -76,8 +76,6 @@ $(document).ready(function () {
   //set database to the firebase database
   database = firebase.database();
 
-  //JQuery Events / Event Listeners
-  //=================================
 
   //Firebase Events
   //======================
@@ -90,7 +88,6 @@ $(document).ready(function () {
 
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
-    console.log("Current Movie Name: ",movieName);
 
     //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
     $("#add-food-submit").attr("data-name", movieName);
@@ -98,8 +95,27 @@ $(document).ready(function () {
     //Get Target Firebase Location- we want the specific movie
     refMovies = database.ref('movies/' + movieName);
 
-    //Firebase function - call firebase and spit out food data onto the page for THIS movie
-    refMovies.on('value', pullFirebaseData, firebaseErrorData);
+    refMovies.once("value")
+      .then(function (snapshot) {
+        var a = snapshot.exists(); // true
+        if (!a) {
+
+          //Clear container
+          //There aren't any movies listed
+          //Create HTML Object to contain the food item
+          var foodListItem = $("<li>");
+          foodListItem.addClass("food-item");
+          foodListItem.text("Be the first to add a munchie to this movie!")
+
+
+        } else {
+
+          //Firebase function - call firebase and spit out food data onto the page for THIS movie
+          refMovies.on('value', pullFirebaseData, firebaseErrorData);
+
+        }
+      });
+
 
   });
 
@@ -130,7 +146,6 @@ $(document).ready(function () {
     //Get Target Firebase Location- we want the specific movie object
     var refMovies = database.ref('movies/' + movieName);
 
-
     //Check database to make sure food isn't already added
     refMovies.on('value', checkForDuplicateFood, firebaseErrorData);
 
@@ -154,7 +169,6 @@ $(document).ready(function () {
         if (!a) {
           refMovies.push(foodData);
           refMovies.on('value', pullFirebaseData, firebaseErrorData);
-
         }
       });
   });
@@ -172,8 +186,6 @@ $(document).ready(function () {
 
     //Append food items to html and local array
     for (var i = 0; i < keys.length; i++) {
-
-
 
       //Get object key (there is always key above the data we want)
       var k = keys[i];
@@ -236,7 +248,7 @@ $(document).ready(function () {
     var $secondSearch = $("#second-search-form");
     var isVisible = $secondSearch.is(':visible');
 
-    
+
     if (isVisible) {
       search = searchAgain;
     } else {
