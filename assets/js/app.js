@@ -147,7 +147,7 @@ $(document).ready(function () {
 
     //Shape the data we want to push to Firebase
     var foodData = {
-      food: addedFood
+      food: nameClean(addedFood)
     }
 
     //Get Target Firebase Location- we want the specific movie object
@@ -225,7 +225,7 @@ $(document).ready(function () {
       var k = keys[i];
       var foodItem = foodObject[k].food;
       console.log("current food item", foodItem);
-      if (addedFood == foodItem) {
+      if (nameClean(addedFood) == foodItem) {
         console.log("A:", addedFood);
         console.log("B:", foodItem);
         uniqueToggle = false;
