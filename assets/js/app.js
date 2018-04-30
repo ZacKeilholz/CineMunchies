@@ -7,9 +7,50 @@
 //MAIN FUNCTION
 //==================================
 
+function showHideSwitch(param) {
+  switch (param) {
+
+    //Page 1 Initial Search page
+    case (1):
+      $("#first-page-search").show();
+      $("#second-page-search,#third-container,#movie-results-container").hide();
+
+
+      break;
+
+    //Page 2- Movie search input has been entered and submitted
+    case (2):
+
+      $("#first-page-search").hide();
+      $("#second-page-search,#movie-results-container").show();
+
+      break;
+
+    //Page 3 - Movie search result has been clicked
+    case (3):
+      $("#second-page-search,#movie-results-container").hide();
+      $("#third-container").show();
+
+      break;
+
+    //Page 4 - Food result has been clicked
+    case (4):
+ 
+    break;
+
+
+
+    default:
+      break;
+  }
+}
 
 $(document).ready(function () {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
+  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
+
+  //Show hide containers
+  showHideSwitch(1);
 
   // Initialize Firebase
   var config = {
@@ -43,6 +84,9 @@ $(document).ready(function () {
 
   //On Click event for movie list line-item
   $("body").on("click", ".movie-item", function () {
+
+    //Show/Hide Containers
+    showHideSwitch(3);
 
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
@@ -179,15 +223,6 @@ $(document).ready(function () {
   //MOVIE REQUEST API
   //=============================================
 
-  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
-  $("#first-page-search").show();
-  $("#second-page-search,#third-container,#movie-results-container").hide();
-
-  $("body").on("click", ".movie-item", function() {
-    console.log("click");
-    console.log($(this).attr("data-name"));
-  });
-
   // when form is submitted the API call will be made
 
   $(".search-form").on("submit", function (event) {
@@ -195,16 +230,16 @@ $(document).ready(function () {
     $("tbody").empty();
     var apiKey = "39a2a8a2";
     var searchMain = $("#search-input").val();
-    var searchAgain=$("#search-again-input").val();
-    var search="";
-    var $secondSearch=$("#second-search-form");
-    var isVisible=$secondSearch.is(':visible');
-    console.log(search);
+    var searchAgain = $("#search-again-input").val();
+    var search = "";
+    var $secondSearch = $("#second-search-form");
+    var isVisible = $secondSearch.is(':visible');
 
-    if(isVisible){
-      search=searchAgain;
-    } else{
-      search=searchMain;
+    
+    if (isVisible) {
+      search = searchAgain;
+    } else {
+      search = searchMain;
     }
 
     var omdbURL =
@@ -227,25 +262,26 @@ $(document).ready(function () {
       url: queryURL,
       method: "GET"
 
-    }).then(function(response) {
+    }).then(function (response) {
       //Once the ajax call is made we can hide the radio buttons and show the table that the API is populating.
-$("#search-again-input").val("").empty();
-      $("#first-page-search").hide();
-      $("#second-page-search,#movie-results-container").show();
+      $("#search-again-input").val("").empty();
+
+      //show hide containers
+      showHideSwitch(2);
+
+
       var data = response;
-      console.log(data);
 
       //this conditional is in preparation for future reverse search functionality
 
       if ((queryURL = omdbURL)) {
         var $newMovie = $("<tr>");
 
-      //prepping the data to go into firebase database with hypens instead of spaces in movie titles
+        //prepping the data to go into firebase database with hypens instead of spaces in movie titles
 
-        var titleClean=data.Title;
-        titleClean=titleClean.replace(/\s+/g,"-").toLowerCase();
-        console.log(titleClean);
-        $newMovie.addClass("movie-item").attr("data-name",titleClean);
+        var titleClean = data.Title;
+        titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
+        $newMovie.addClass("movie-item").attr("data-name", titleClean);
 
 
         $newMovie
