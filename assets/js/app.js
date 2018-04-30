@@ -9,39 +9,39 @@ var apiKey = "39a2a8a2";
 //Use this switch case for showing/hiding containers when pages change during on-click events
 function showHideSwitch(param) {
   switch (param) {
-    
+
     //Page 1 Initial Search page
     case (1):
-    $("#first-page-search").show();
-    $("#second-page-search,#third-container,#movie-results-container").hide();
-    
-    
-    break;
-    
+      $("#first-page-search").show();
+      $("#second-page-search,#third-container,#movie-results-container").hide();
+
+
+      break;
+
     //Page 2- Movie search input has been entered and submitted
     case (2):
-    
-    $("#first-page-search").hide();
-    $("#second-page-search,#movie-results-container").show();
-    
-    break;
-    
-    //Page 3 - Movie search result has been clicked
+
+      $("#first-page-search").hide();
+      $("#second-page-search,#movie-results-container").show();
+
+      break;
+
+    //Page 3 - Movie search result or trending movie  has been clicked
     case (3):
-    $("#second-page-search,#movie-results-container").hide();
-    $("#third-container").show();
-    
-    break;
-    
+      $("#first-page-search,#second-page-search,#movie-results-container").hide();
+      $("#third-container").show();
+
+      break;
+
     //Page 4 - Food result has been clicked
     case (4):
-    
-    break;
-    
-    
-    
+
+      break;
+
+
+
     default:
-    break;
+      break;
   }
 }
 
@@ -49,14 +49,14 @@ function showHideSwitch(param) {
 //Name Cleaner Function - Converts upper to lower case and swaps spaces for hyphens:
 function nameClean(textInput) {
 
- return textInput.replace(/\s+/g, "-").toLowerCase();
+  return textInput.replace(/\s+/g, "-").toLowerCase();
 
 };
 
 //Name UnCleaner Function - Converts hyphenated name to spaced name for pretty html use
 function nameUnclean(textInput) {
 
- return textInput.replace("-", " ");
+  return textInput.replace("-", " ");
 
 };
 //MAIN FUNCTION
@@ -65,6 +65,7 @@ function nameUnclean(textInput) {
 $(document).ready(function () {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
   //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
+
 
   //Show hide containers
   showHideSwitch(1);
@@ -90,6 +91,9 @@ $(document).ready(function () {
   var addedFood;
   var uniqueToggle = false;
 
+  var trendingToggle = true;
+
+
   //set database to the firebase database
   database = firebase.database();
 
@@ -97,9 +101,66 @@ $(document).ready(function () {
   //Firebase Events
   //======================
 
-  //On Click event for movie list line-item
-  $("body").on("click", ".movie-item", function () {
+  //Set Firebase Trending Database Location
+  var refTrending = database.ref('trending/movies');
 
+
+  refTrending.on('value', retrieveFirebaseTrending, firebaseErrorData);
+
+  //Uncomment this and use to remake database if trendData is deleted- (code will not function otherwise)..  Add this into a check function at some point:
+  // var trendData = {
+  //   movieName: "gladiator"
+  // }
+  // refTrending.push(trendData);
+
+
+  //On page-load, fill trending container with items from Firebase Trending 
+  //retrieveFirebaseTrending();
+  //Firebase function - call firebase and spit out food data onto the page for THIS movie
+
+  function retrieveFirebaseTrending(data) {
+    console.log("Retrieving Trend List");
+    // Clear out the food list container each time this function is called
+    $("#trend-list").empty();
+
+    //Retrieve Firebase food data for the specific movie that was passed into the function
+    var trendObject = data.val();
+    console.log("trendobject", trendObject);
+    var keys = Object.keys(trendObject);
+    //Append food items to html and local array
+    var highKeysLength = (keys.length)-1;
+    for (var i = highKeysLength; i > highKeysLength-10; i--) {
+      console.log("keys!");
+      var k = keys[i];
+      //Get the specific food value at this key
+      var trendItem = trendObject[k].movieName;
+
+      console.log(trendItem);
+
+      //Create HTML Object to contain the food item
+      var $newRow = $("<tr>");
+      var $trendListItem = $("<td>");
+
+      //Adds Selector Class for API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' trend data
+      $trendListItem.addClass("trend-item text-capitalize");
+
+      //Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
+      $trendListItem.attr("data-name", nameClean(trendItem));
+
+      //Append to html food list container- use unclean version (swap hyphens for spaces)
+      $trendListItem.text(nameUnclean(trendItem));
+
+
+      $newRow.append($trendListItem);
+      $("#trend-list").append($newRow);
+    }
+  }
+
+
+
+  //On Click event for movie list or trending movie item
+  $("body").on("click", ".movie-item,.trend-item", function () {
+    console.log("clicked");
     //Show/Hide Containers
     showHideSwitch(3);
 
@@ -132,11 +193,17 @@ $(document).ready(function () {
       });
 
 
+    //Add selected movie to Firebase Trending List
+    trendData = {
+      movieName: nameClean(movieName)
+    }
+    refTrending.push(trendData);
+
   });
 
   //ADDING NEW FOOD ITEM TO FIREBASE (FORM SUBMIT)
 
-  $("body").on("click", "#add-food-submit", function(event) {
+  $("body").on("click", "#add-food-submit", function (event) {
     event.preventDefault();
 
     uniqueToggle = false;
@@ -203,7 +270,7 @@ $(document).ready(function () {
       var k = keys[i];
       //Get the specific food value at this key
       var foodItem = foodObject[k].food;
-  
+
       //Create HTML Object to contain the food item
       var $newRow = $("<tr>");
       var $foodListItem = $("<td>");
@@ -257,7 +324,7 @@ $(document).ready(function () {
 
   // when form is submitted the API call will be made
 
-  $(".search-form").on("submit", function(event) {
+  $(".search-form").on("submit", function (event) {
     event.preventDefault();
     $("tbody").empty();
     var search = getSearchValue();
@@ -292,7 +359,7 @@ function populateTable(searchResponse) {
 
 function fetchMovieDetails(limitedData) {
   var exactSearch = limitedData[i].Title;
- 
+
   var limitURL =
     "https://www.omdbapi.com/?t=" +
     exactSearch +
@@ -307,8 +374,8 @@ function fetchMovieDetails(limitedData) {
 function populateMovieRow(titleResponse) {
   var $newMovie = $("<tr>");
 
-   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
-  var titleClean=titleResponse.Title;
+  //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
+  var titleClean = titleResponse.Title;
   titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
   console.log(titleClean);
   $newMovie.addClass("movie-item").attr("data-name", titleClean);
