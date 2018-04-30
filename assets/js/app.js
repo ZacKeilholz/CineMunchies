@@ -21,7 +21,7 @@ $(document).ready(function () {
     messagingSenderId: "815938672043"
   };
 
-  //Global Vars 
+  //Global Vars
   //=================================
 
   firebase.initializeApp(config);
@@ -82,7 +82,7 @@ $(document).ready(function () {
       food: addedFood
     }
 
-    //Get Target Firebase Location- we want the specific movie object 
+    //Get Target Firebase Location- we want the specific movie object
     var refMovies = database.ref('movies/' + movieName);
 
 
@@ -101,7 +101,7 @@ $(document).ready(function () {
       //create a bootstrap alert at top of page notifying user that the input food already exists
     }
 
-    //Testing to see if this movie has a database entry at all- and pushing data to it if not. 
+    //Testing to see if this movie has a database entry at all- and pushing data to it if not.
     //Check if database entry exists
     refMovies.once("value")
       .then(function (snapshot) {
@@ -118,7 +118,7 @@ $(document).ready(function () {
   //==================================
   function pullFirebaseData(data) {
 
-    //Clear out the food list container each time this function is called 
+    //Clear out the food list container each time this function is called
     $("#food-list").empty();
 
     //Retrieve Firebase food data for the specific movie that was passed into the function
@@ -249,8 +249,8 @@ $("#search-again-input").val("").empty();
 
 
         $newMovie
-          .append(`<td scope="row">${data.Title}</td>`)
-          .append(`<td scope="row">${data.Plot}</td>`)
+          .append(`<td scope="row"><h1>${data.Title}</h1></td>`)
+          .append(`<td scope="row"><p>${data.Plot}</p></td>`)
           .append(`<td scope="row"><img src=${data.Poster}></td>`);
         $("tbody").prepend($newMovie);
       } else {
@@ -262,7 +262,7 @@ $("#search-again-input").val("").empty();
         //   .append(`<td scope="row"><img src=${data}></td>`);
         // $("tbody").prepend(newMovie);
       }
-  
-    });  
+
+    });
   });
 });
