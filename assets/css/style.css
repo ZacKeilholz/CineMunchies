@@ -44,3 +44,16 @@ form {
 #add-food-submit {
   margin-top: 10px;
 }
+
+img {
+  width: 120%;
+}
+
+#movie-results-container h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#movie-results-container p {
+  font-size: 14px;
+}

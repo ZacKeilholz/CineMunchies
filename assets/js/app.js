@@ -1,14 +1,71 @@
 //Global Vars
 //=================================
 
-//Jquery HTML Targets
+//Helper Functions
 //=================================
 
+//Use this switch case for showing/hiding containers when pages change during on-click events
+function showHideSwitch(param) {
+  switch (param) {
+    
+    //Page 1 Initial Search page
+    case (1):
+    $("#first-page-search").show();
+    $("#second-page-search,#third-container,#movie-results-container").hide();
+    
+    
+    break;
+    
+    //Page 2- Movie search input has been entered and submitted
+    case (2):
+    
+    $("#first-page-search").hide();
+    $("#second-page-search,#movie-results-container").show();
+    
+    break;
+    
+    //Page 3 - Movie search result has been clicked
+    case (3):
+    $("#second-page-search,#movie-results-container").hide();
+    $("#third-container").show();
+    
+    break;
+    
+    //Page 4 - Food result has been clicked
+    case (4):
+    
+    break;
+    
+    
+    
+    default:
+    break;
+  }
+}
+
+
+//Name Cleaner Function - Converts upper to lower case and swaps spaces for hyphens:
+function nameClean(textInput) {
+
+ return textInput.replace(/\s+/g, "-").toLowerCase();
+
+};
+
+//Name UnCleaner Function - Converts hyphenated name to spaced name for pretty html use
+function nameUnclean(textInput) {
+
+ return textInput.replace("-", " ");
+
+};
 //MAIN FUNCTION
 //==================================
 
-$(document).ready(function() {
+$(document).ready(function () {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
+  //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
+
+  //Show hide containers
+  showHideSwitch(1);
 
   // Initialize Firebase
   var config = {
@@ -34,25 +91,45 @@ $(document).ready(function() {
   //set database to the firebase database
   database = firebase.database();
 
-  //JQuery Events / Event Listeners
-  //=================================
 
   //Firebase Events
   //======================
 
   //On Click event for movie list line-item
-  $("body").on("click", ".movie-item", function() {
+  $("body").on("click", ".movie-item", function () {
+
+    //Show/Hide Containers
+    showHideSwitch(3);
+
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
 
     //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
-    $("#submit-button").attr("data-name", movieName);
+    $("#add-food-submit").attr("data-name", movieName);
 
     //Get Target Firebase Location- we want the specific movie
     refMovies = database.ref("movies/" + movieName);
 
-    //Firebase function - call firebase and spit out food data onto the page for THIS movie
-    refMovies.on("value", pullFirebaseData, firebaseErrorData);
+    refMovies.once("value")
+      .then(function (snapshot) {
+        var a = snapshot.exists(); // true
+        if (!a) {
+
+          //Clear container
+          //There aren't any movies listed
+          //Create HTML Object to contain the food item
+          var foodListItem = $("<li>");
+          foodListItem.text("Be the first to add a munchie to this movie!")
+
+        } else {
+
+          //Firebase function - call firebase and spit out food data onto the page for THIS movie
+          refMovies.on('value', pullFirebaseData, firebaseErrorData);
+
+        }
+      });
+
+
   });
 
   //ADDING NEW FOOD ITEM TO FIREBASE (FORM SUBMIT)
@@ -76,11 +153,11 @@ $(document).ready(function() {
 
     //Shape the data we want to push to Firebase
     var foodData = {
-      food: addedFood
-    };
+      food: nameClean(addedFood)
+    }
 
     //Get Target Firebase Location- we want the specific movie object
-    var refMovies = database.ref("movies/" + movieName);
+    var refMovies = database.ref('movies/' + movieName);
 
     //Check database to make sure food isn't already added
     refMovies.on("value", checkForDuplicateFood, firebaseErrorData);
@@ -98,13 +175,14 @@ $(document).ready(function() {
 
     //Testing to see if this movie has a database entry at all- and pushing data to it if not.
     //Check if database entry exists
-    refMovies.once("value").then(function(snapshot) {
-      var a = snapshot.exists(); // true
-      if (!a) {
-        refMovies.push(foodData);
-        refMovies.on("value", pullFirebaseData, firebaseErrorData);
-      }
-    });
+    refMovies.once("value")
+      .then(function (snapshot) {
+        var a = snapshot.exists(); // true
+        if (!a) {
+          refMovies.push(foodData);
+          refMovies.on('value', pullFirebaseData, firebaseErrorData);
+        }
+      });
   });
 
   //Get list of foods from Firebase! (data parameter is a reference to the Firebase )
@@ -123,14 +201,23 @@ $(document).ready(function() {
       var k = keys[i];
       //Get the specific food value at this key
       var foodItem = foodObject[k].food;
-
+  
       //Create HTML Object to contain the food item
-      var foodListItem = $("<li>");
-      foodListItem.addClass("food-item");
+      var $newRow = $("<tr>");
+      var $foodListItem = $("<td>");
 
-      //Append to html food list container
-      foodListItem.text(foodItem);
-      $("#food-list").append(foodListItem);
+      //Adds Selector Class for Page 4 Recipe API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' food data
+      $foodListItem.addClass("food-item text-capitalize");
+
+      //Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
+      $foodListItem.attr("data-name", nameClean(foodItem));
+
+      //Append to html food list container- use unclean version (swap hyphens for spaces)
+      $foodListItem.text(nameUnclean(foodItem));
+
+
+      $newRow.append($foodListItem);
+      $("#food-list").append($newRow);
     }
   }
 
@@ -147,7 +234,7 @@ $(document).ready(function() {
       var k = keys[i];
       var foodItem = foodObject[k].food;
       console.log("current food item", foodItem);
-      if (addedFood == foodItem) {
+      if (nameClean(addedFood) == foodItem) {
         console.log("A:", addedFood);
         console.log("B:", foodItem);
         uniqueToggle = false;
@@ -165,23 +252,8 @@ $(document).ready(function() {
 
   //MOVIE REQUEST API
   //=============================================
-  //Fixing the API limit bug is a little more difficult.
-  //The way the API objects are written, the title query ("?t=") looks up one exact title only which is why we only ever had one result previously.
-  //The search query("?s=") looks up everything that has the search term included but the objects in the array do not include the short plot.
-  //I will have to call the movie API multiple times:
-  // Once to grab the array of matching titles with the 5 title limit we decided on (using "?s=" in the query).
-  //Then I need to loop over the array and call the API for each title in order to grab the short plots using "?t=" in the query.
 
-  //NOTE: Switch these default show/hide methods to CSS set display to none after functionality problems are fixed.
-  $("#first-page-search").show();
-  $("#second-page-search,#third-container,#movie-results-container").hide();
-
-  $("body").on("click", ".movie-item", function() {
-    console.log("click");
-    console.log($(this).attr("data-name"));
-  });
-
-  //  the API call will be made when form is submitted
+  // when form is submitted the API call will be made
 
   $(".search-form").on("submit", function(event) {
     event.preventDefault();
@@ -191,9 +263,8 @@ $(document).ready(function() {
     var searchAgain = $("#search-again-input").val();
     var search = "";
     var $secondSearch = $("#second-search-form");
-    var isVisible = $secondSearch.is(":visible");
-    var titleSearch = "?t=";
-    var movieSearch = "?s=";
+    var isVisible = $secondSearch.is(':visible');
+
 
     if (isVisible) {
       search = searchAgain;
