@@ -113,9 +113,7 @@ $(document).ready(function () {
           //There aren't any movies listed
           //Create HTML Object to contain the food item
           var foodListItem = $("<li>");
-          foodListItem.addClass("food-item");
           foodListItem.text("Be the first to add a munchie to this movie!")
-
 
         } else {
 
@@ -200,14 +198,15 @@ $(document).ready(function () {
       var k = keys[i];
       //Get the specific food value at this key
       var foodItem = foodObject[k].food;
-
+      console.log("food item:" , foodItem);
+      console.log(nameClean(foodItem));
       //Create HTML Object to contain the food item
-      var foodListItem = $("<li>");
-      foodListItem.addClass("food-item");
-
+      var $foodListItem = $("<li>");
+      $foodListItem.addClass("food-item");
+      $foodListItem.attr("data-name", nameClean(foodItem));
       //Append to html food list container
-      foodListItem.text(foodItem);
-      $("#food-list").append(foodListItem);
+      $foodListItem.text(foodItem);
+      $("#food-list").append($foodListItem);
     }
   }
 
@@ -299,11 +298,7 @@ $(document).ready(function () {
       if ((queryURL = omdbURL)) {
         var $newMovie = $("<tr>");
 
-        //prepping the data to go into firebase database with hypens instead of spaces in movie titles
-
-        var titleClean = nameClean(data.Title);
-        $newMovie.addClass("movie-item").attr("data-name", titleClean);
-
+        $newMovie.addClass("movie-item").attr("data-name", nameClean(data.Title));
 
         $newMovie
           .append(`<td scope="row"><h1>${data.Title}</h1></td>`)
