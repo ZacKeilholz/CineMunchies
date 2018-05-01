@@ -116,7 +116,7 @@ $(document).ready(function() {
   // refTrending.push(trendData);
 
 
-  //This function retrieves the last 10 movies that were searched for and subsequently clicked on from the Firebase/Trending folder in the database and then inserts them onto page 1 as table rows.  
+  //This function retrieves the last 10 movies that were searched for and subsequently clicked on from the Firebase/Trending folder in the database and then inserts them onto page 1 as table rows.
 
   function retrieveFirebaseTrending(data) {
 
@@ -127,10 +127,10 @@ $(document).ready(function() {
     var trendObject = data.val();
     var keys = Object.keys(trendObject);
 
-    //Grab length of the trend list for use in the for loop 
+    //Grab length of the trend list for use in the for loop
     var highKeysLength = (keys.length)-1;
 
-    //For loop grabs searches from the END of the list and works back 10 items and displays them on page 1.  
+    //For loop grabs searches from the END of the list and works back 10 items and displays them on page 1.
     for (var i = highKeysLength; i > highKeysLength-10; i--) {
       console.log("keys!");
       var k = keys[i];
@@ -141,21 +141,37 @@ $(document).ready(function() {
       var $newRow = $("<tr>");
       var $trendListItem = $("<td>");
 
-      //Adds Selector Class for API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' trend data
-      $trendListItem.addClass("trend-item text-capitalize");
+      // ZAC - THIS IS WHERE I ADDED MY BUTTON CODE
 
-      //Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
-      $trendListItem.attr("data-name", nameClean(trendItem));
+      // Dynamically generating buttons for each movie in the array
+      var a = $("<button>");
 
-      //Append to html food list container- use unclean version (swap hyphens for spaces)
-      $trendListItem.text(nameUnclean(trendItem));
+      // Adding a class of artist-btn to our button
+      a.addClass("waves-effect waves-light btn");
 
-      $newRow.append($trendListItem);
+      // Adding a data-attribute
+      a.attr("data-name", nameClean(trendItem));
+
+      // Providing the initial button text
+      a.text(nameClean(trendItem));
+
+      // ZAC - I KEPT YOUR EXISTING CODE HERE
+
+      // Adds Selector Class for API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' trend data
+      // $trendListItem.addClass("trend-item text-capitalize");
+      //
+      // Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
+      // $trendListItem.attr("data-name", nameClean(trendItem));
+      //
+      // Append to html food list container- use unclean version (swap hyphens for spaces)
+      // $trendListItem.text(nameUnclean(trendItem));
+
+      $newRow.append(a);
       $("#trend-list").append($newRow);
     }
   }
 
-  //MOVIE SEARCH RESULT OR FIREBASE TRENDING ITEM HAS BEEN CLICKED: 
+  //MOVIE SEARCH RESULT OR FIREBASE TRENDING ITEM HAS BEEN CLICKED:
   //================================================================
 
   $("body").on("click", ".movie-item,.trend-item", function () {
@@ -407,7 +423,7 @@ function populateMovieRow(limitedMovieList) {
   $newMovie
     .append(`<td scope="row"><h1>${limitedMovieList.Title}</h1></td>`)
     .append(`<td scope="row"><p>${limitedMovieList.Plot}<p></td>`)
-    .append(`<td scope="row"><img src=${limitedMovieList.Poster}></td>`);
+    .append(`<td scope="row"><img class="responsive-img" src=${limitedMovieList.Poster}></td>`);
   $("#movie-results-tbody").append($newMovie);
 }
 //List of Food API functions
@@ -449,13 +465,13 @@ function populateRecipeTable(recipeResponse) {
 }
 
 // function populateRecipeRow(recipeData[i]) {
-  
+
 // }
 //================
 // function getQueryURL(search) {
 //   var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
 //   var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
-  
+
 //   //The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
 //   if ($("#customRadioInline1").is(":checked")) {
 //     queryURL = omdbURL;
@@ -478,7 +494,7 @@ function getSearchValue() {
   } else if (movieFoodVisible){
    search=$(".food-item").attr("data-name");
   }else{
-    search=$("#search-input").val();
+    search=$(".search-input").val();
   }
   return search;
 }
