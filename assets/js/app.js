@@ -3,6 +3,7 @@
 
 var apiKey = "39a2a8a2";
 
+
 //Jquery HTML Targets
 //=================================
 
@@ -14,7 +15,6 @@ function showHideSwitch(param) {
     case (1):
       $("#first-page-search").show();
       $("#second-page-search,#third-container,#movie-results-container").hide();
-
 
       break;
 
@@ -36,15 +36,15 @@ function showHideSwitch(param) {
 
     //Page 4 - Food result has been clicked
     case (4):
-
+    console.log("HIDING PAGE 1-3");
+    $("#first-page-search,#second-container,#third-container").hide();
+    $("#fourth-container").show();
       break;
-
 
     default:
       break;
   }
 }
-
 
 //Name Cleaner Function - Converts upper to lower case and swaps spaces for hyphens:
 function nameClean(textInput) {
@@ -62,7 +62,7 @@ function nameUnclean(textInput) {
 //MAIN FUNCTION
 //==================================
 
-$(document).ready(function () {
+$(document).ready(function() {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
   //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
 
@@ -223,10 +223,10 @@ $(document).ready(function () {
     //Shape the data we want to push to Firebase
     var foodData = {
       food: nameClean(addedFood)
-    }
+    };
 
     //Get Target Firebase Location- we want the specific movie object
-    var refMovies = database.ref('movies/' + movieName);
+    var refMovies = database.ref("movies/" + movieName);
 
     //Check database to make sure food isn't already added
     refMovies.on("value", checkForDuplicateFood, firebaseErrorData);
@@ -244,14 +244,13 @@ $(document).ready(function () {
 
     //Testing to see if this movie has a database entry at all- and pushing data to it if not.
     //Check if database entry exists
-    refMovies.once("value")
-      .then(function (snapshot) {
-        var a = snapshot.exists(); // true
-        if (!a) {
-          refMovies.push(foodData);
-          refMovies.on('value', pullFirebaseData, firebaseErrorData);
-        }
-      });
+    refMovies.once("value").then(function(snapshot) {
+      var a = snapshot.exists(); // true
+      if (!a) {
+        refMovies.push(foodData);
+        refMovies.on("value", pullFirebaseData, firebaseErrorData);
+      }
+    });
   });
 
   //Get list of foods from Firebase! (data parameter is a reference to the Firebase )
@@ -283,7 +282,6 @@ $(document).ready(function () {
 
       //Append to html food list container- use unclean version (swap hyphens for spaces)
       $foodListItem.text(nameUnclean(foodItem));
-
 
       $newRow.append($foodListItem);
       $("#food-list").append($newRow);
@@ -319,45 +317,72 @@ $(document).ready(function () {
     console.log(err);
   }
 
-  //MOVIE REQUEST API
+  //MOVIE REQUEST API EVENT HANDLER
   //=============================================
 
   // when form is submitted the API call will be made
 
   $(".search-form").on("submit", function (event) {
     event.preventDefault();
+    // queryURL=omdbURL;
     $("#movie-results-tbody").empty();
     var search = getSearchValue();
-    doSearch(search);
+    var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
+    doMovieSearch(omdbURL);
   });
 });
 
+//EDAMAM RECIPE REQUEST API EVENT HANDLER
+//==================================================
+$("body").on("click", ".food-item", function() {
+  search=$(this).attr("data-name");
+  // queryURL=edamamURL;
+  console.log("clicked the food list item");
+  $("#recipe-results-tbody").empty();
+  // var search = getSearchValue();
+  var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
+  console.log(nameUnclean(search));
+  console.log(edamamURL);
+  doFoodSearch(nameUnclean(edamamURL));
 
-//Global API/Search functions that feed into the $(".search-form").on("submit") event handler.
+
+
+
+});
+
+//List of Movie API Functions
 //=======================================================
-function doSearch(search) {
-  var queryURL = getQueryURL(search);
+function doMovieSearch(url) {
+  // var queryURL = getQueryURL(search);
   $.ajax({
-    url: queryURL,
+    url: url,
     method: "GET"
-  }).then(populateTable);
+  }).then(populateMovieTable);
 }
-
-function populateTable(searchResponse) {
+// EDAMAM AJAX Call: Grab list of relevant foods
+function doFoodSearch(url){
+  // var queryURL = getQueryURL(search);
+  $.ajax({
+    url: url,
+    method: "GET"
+  }).then(populateRecipeTable);
+}
+//Limit the data from the first AJAX call and loop over each result
+function populateMovieTable(searchResponse) {
   //show hide containers
   showHideSwitch(2);
 
   $("#search-again-input").val("");
 
-  var data = searchResponse.Search;
-  var limitedData = data.slice(0, 5);
-  for (i = 0; i < limitedData.length; i++) {
-    fetchMovieDetails(limitedData);
+  var movieData = searchResponse.Search;
+  var limitedMovieList = movieData.slice(0, 5);
+  for (i = 0; i < limitedMovieList.length; i++) {
+    fetchMovieDetails(limitedMovieList);
   }
 }
-
-function fetchMovieDetails(limitedData) {
-  var exactSearch = limitedData[i].Title;
+//Second OMDB AJAX Call: Grab properties to load into each row
+function fetchMovieDetails(limitedMovieList) {
+  var exactSearch = limitedMovieList[i].Title;
 
   var limitURL =
     "https://www.omdbapi.com/?t=" +
@@ -369,54 +394,91 @@ function fetchMovieDetails(limitedData) {
     method: "GET"
   }).then(populateMovieRow);
 }
-function populateMovieRow(titleResponse) {
+//Populate the movie rows
+function populateMovieRow(limitedMovieList) {
   var $newMovie = $("<tr>");
 
   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
-  var titleClean = titleResponse.Title;
-  titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
 
-  $newMovie.addClass("movie-item").attr("data-name", titleClean);
+  $newMovie.addClass("movie-item").attr("data-name", nameClean(limitedMovieList.Title));
 
-  //filling in the columns with the relevant information from each object in the limitedData array
+
+  //filling in the columns with the relevant information from each object in the limitedMovieList array
   $newMovie
-    .append(`<td scope="row">${titleResponse.Title}</td>`)
-    .append(`<td scope="row">${titleResponse.Plot}</td>`)
-    .append(`<td scope="row"><img src=${titleResponse.Poster}></td>`);
+    .append(`<td scope="row"><h1>${limitedMovieList.Title}</h1></td>`)
+    .append(`<td scope="row"><p>${limitedMovieList.Plot}<p></td>`)
+    .append(`<td scope="row"><img src=${limitedMovieList.Poster}></td>`);
   $("#movie-results-tbody").append($newMovie);
-  //Writing this code out in case we get to the reverse search features
-  // var newRecipe = $("<tr>");
-  // newRecipe
-  //   .append(`<td scope="row">${data}</td>`)
-  //   .append(`<td scope="row">${data}</td>`)
-  //   .append(`<td scope="row"><img src=${data}></td>`);
-  // $("tbody").prepend(newRecipe);
+}
+//List of Food API functions
+//===============================================
+
+function populateRecipeTable(recipeResponse) {
+  //show hide containers
+  showHideSwitch(4);
+  console.log(recipeResponse);
+  var recipeData = recipeResponse.hits;
+  console.log(recipeData[1]);
+  console.log(recipeData[1].recipe.label);
+
+
+  for (i = 0; i < 5; i++) {
+    // populateRecipeRow(recipeData[i]);
+
+  var $newRecipe = $("<tr>");
+
+  //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
+  var recipeName = recipeData[i].label;
+
+
+
+
+  $newRecipe.addClass(".food-item").attr("data-name", recipeName);
+
+  //filling in the columns with the relevant information from each object in the limitedMovieList array
+  $newRecipe
+    .append(`<td scope="row">${recipeData[i].recipe.label}</td>`)
+    .append(`<td scope="row">${recipeData[i].recipe.url}</td>`)
+    .append(`<td scope="row">${recipeData[i].recipe.source}</td>`)
+    .append(`<td scope="row">${recipeData[i].recipe.healthLabels}</td>`)
+    .append(`<td scope="row"><img src=${recipeData[i].recipe.image}></td>`)
+  ;
+  $("#recipe-results-tbody").append($newRecipe);
+  }
+  console.log(recipeName);
 }
 
-function getQueryURL(search) {
-  var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
-  var edamamURL = "";
-  var queryURL = "";
-  // The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
-  if ($("#customRadioInline1").is(":checked")) {
-    queryURL = omdbURL;
-  } else if ($("#customRadioInline2").is(":checked")) {
-    queryURL = edamamURL;
-  } else {
-    //form validation
-    $(".search-clear").html("Please select movie or food");
-  }
-  return queryURL;
-}
+// function populateRecipeRow(recipeData[i]) {
+  
+// }
+//================
+// function getQueryURL(search) {
+//   var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
+//   var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
+  
+//   //The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
+//   if ($("#customRadioInline1").is(":checked")) {
+//     queryURL = omdbURL;
+//   } else if ($("#customRadioInline2").is(":checked")) {
+//     queryURL = edamamURL;
+//   } else {
+//     queryURL=edamamURL;
+//     //form validation
+//   }
+//   return queryURL;
+// }
 
 function getSearchValue() {
   var search;
-  var isVisible = $("#second-search-form").is(":visible");
+  var secondSearchVisible = $("#second-search-form").is(":visible");
+  var movieFoodVisible= $("#movie-food-container").is(":visible");
   //this logic decides which search input to grab values from for the API call
-  if (isVisible) {
+  if (secondSearchVisible) {
     search = $("#search-again-input").val();
-  } else {
-    search = $("#search-input").val();
+  } else if (movieFoodVisible){
+   search=$(".food-item").attr("data-name");
+  }else{
+    search=$("#search-input").val();
   }
   return search;
 }
