@@ -75,6 +75,11 @@ img {
   text-align: center;
 }
 
+
+.foodListDiv {
+  text-align: center;
+}
+
 .trendingMoviesDiv button {
   margin-bottom: 10px;
 }
