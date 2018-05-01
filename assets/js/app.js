@@ -14,7 +14,7 @@ function showHideSwitch(param) {
     //Page 1 Initial Search page
     case (1):
       $("#first-page-search").show();
-      $("#second-page-search,#third-container,#movie-results-container").hide();
+      $("#second-page-search,#third-container,#movie-results-container,#fourth-container").hide();
 
       break;
 
@@ -139,9 +139,6 @@ $(document).ready(function() {
 
       //Create HTML Object to contain the food item
       var $newRow = $("<tr>");
-      var $trendListItem = $("<td>");
-
-      // ZAC - THIS IS WHERE I ADDED MY BUTTON CODE
 
       // Dynamically generating buttons for each movie in the array
       var a = $("<button>");
@@ -154,17 +151,6 @@ $(document).ready(function() {
 
       // Providing the initial button text
       a.text(nameClean(trendItem));
-
-      // ZAC - I KEPT YOUR EXISTING CODE HERE
-
-      // Adds Selector Class for API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' trend data
-      // $trendListItem.addClass("trend-item text-capitalize");
-      //
-      // Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
-      // $trendListItem.attr("data-name", nameClean(trendItem));
-      //
-      // Append to html food list container- use unclean version (swap hyphens for spaces)
-      // $trendListItem.text(nameUnclean(trendItem));
 
       $newRow.append(a);
       $("#trend-list").append($newRow);
@@ -287,20 +273,22 @@ $(document).ready(function() {
       var foodItem = foodObject[k].food;
 
       //Create HTML Object to contain the food item
-      var $newRow = $("<tr>");
-      var $foodListItem = $("<td>");
+      // Dynamically generating buttons for each movie in the array
+      var a = $("<button>");
+      var $newDiv = $("<div>");
+      $newDiv.addClass("row");
+      // Adding a class of artist-btn to our button
+      a.addClass("waves-effect center-align waves-light btn food-item text-capitalize");
 
-      //Adds Selector Class for Page 4 Recipe API On Click Event and bootstrap class for capitalizing the 'cleaned/uncleaned' food data
-      $foodListItem.addClass("food-item text-capitalize");
+      // Adding a data-attribute
+      a.attr("data-name", nameClean(foodItem));
 
-      //Adds attribute for use in pg 4 recipe api call- it's 'cleaned'
-      $foodListItem.attr("data-name", nameClean(foodItem));
+      // Providing the initial button text
+      a.text(nameClean(foodItem));
 
-      //Append to html food list container- use unclean version (swap hyphens for spaces)
-      $foodListItem.text(nameUnclean(foodItem));
+      $newDiv.append(a);
+      $("#food-list").append($newDiv);
 
-      $newRow.append($foodListItem);
-      $("#food-list").append($newRow);
     }
   }
 
