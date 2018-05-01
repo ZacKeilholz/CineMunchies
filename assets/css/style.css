@@ -1,25 +1,38 @@
 body {
   background: url("../images/cinema01.jpeg");
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.container {
+  width: 100%;
 }
 
 #main-container {
-  width: 100%;
+  width: 90%;
   max-width: 960px;
-  margin: 10px auto 50px auto;
+  /* margin: 10px auto 50px auto; */
   clear: both;
 }
 
 .jumbotron {
-   background-color: #20315A;
-   color: white;
+   background-color: white;
+   color: #702f34;
 }
 
 .jumbotron h1 {
-  font-size: 60px;
+  font-size: 45px;
+  text-align: center;
+  font-family: 'Lobster', cursive;
 }
 
 .jumbotron i {
-  margin: 0 50px;
+  font-size: 35px;
+}
+
+.jumbotron a {
+   text-decoration: none;
+   background-color: white;
+   color: #702f34;
 }
 
 form {
@@ -56,4 +69,16 @@ img {
 
 #movie-results-container p {
   font-size: 14px;
+}
+
+.trendingMoviesDiv {
+  text-align: center;
+}
+
+.trendingMoviesDiv button {
+  margin-bottom: 10px;
+}
+
+.trendingMoviesDiv tr {
+  border: none;
 }

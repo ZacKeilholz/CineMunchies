@@ -4,30 +4,40 @@
 <head>
   <meta charset="utf-8">
   <title>CineMunchies</title>
-  <!-- Bootstrap CDN Link -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-    crossorigin="anonymous">
+
+  <!-- Materialize Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 
   <!-- Font Awesome CSS Icons (For cool glyphicons) -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
     crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Noto+Sans:400,400i,700,700i" rel="stylesheet">
+
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
 </head>
 
 <body>
+
+  <div class="container" id="header-container">
+    <div class="jumbotron">
+      <a href="/index.html"><h1>
+        <i class="material-icons">local_movies</i>
+        CineMunchies
+        <i class="material-icons">local_movies</i>
+      </h1></a>
+    </div>
+  </div>
 
   <div class="container" id="main-container">
 
     <!-- FIRST PAGE -->
     <div class="container" id="first-container">
-      <div class="container">
-        <div class="jumbotron">
-          <h1 class="text-center">
-            <i class="fas fa-film"></i>CineMunchies
-            <i class="fas fa-film"></i>
-          </h1>
-        </div>
-      </div>
 
       <!-- Add Movie -->
       <div class="container search-container" id="first-page-search">
@@ -39,7 +49,7 @@
             <form role="form" class="search-form" id="first-search-form">
 
               <!-- Radio Buttons -->
-              <div class="form-check form-check-inline">
+              <!-- <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="exampleRadios" id="customRadioInline1" value="option1" checked>
                 <label class="form-check-label" for="exampleRadios1">
                   Movie
@@ -51,28 +61,50 @@
                 <label class="form-check-label" for="exampleRadios3">
                   Food (coming soon)
                 </label>
-              </div>
+              </div> -->
 
               <!-- Input Field -->
-              <div class="form-group row">
+              <!-- <div class="form-group row">
                 <input class="form-control search-clear" id="search-input" type="text" placeholder="Movie Title">
               </div>
-              <button class="btn btn-primary" id="search-submit" type="submit">Search</button>
-            </form>
+              <button class="btn btn-primary" id="search-submit" type="submit">Search</button> -->
+            <!-- </form> -->
+
+              <!-- Input Field -->
+              <div class="row">
+                <form class="col s6">
+
+                  <div class="input-field col s6">
+                    <i class="material-icons prefix">movie_filter</i>
+                    <input id="icon_prefix" type="text" class="search-input">
+                    <label for="icon_prefix">Type Movie Title Here</label>
+                  </div>
+
+                  <div class="input-field col s6">
+                  <button class="btn waves-effect waves-light" type="submit" name="action" id="search-submit">Submit
+                  <i class="material-icons right">send</i>
+                  </button>
+                  </div>
+                </form>
+              </div>
+
           </div>
 
           <!-- Trending Movies  -->
-          <h3>Trending Movies:</h3>
-          <table>
-            <tbody id="trend-list">
-              <tr>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="trendingMoviesDiv">
+            <h5>CineMunchies Trending Movies:</h5>
+              <table>
+                <tbody id="trend-list">
+                  <tr>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+
         </div>
 
       </div>
@@ -191,7 +223,7 @@
                     <th colspan="3" id="table-title"></th>
                   </tr>
                 </thead>
-  
+
                 <tbody id="recipe-results-tbody">
                 </tbody>
               </table>
@@ -207,6 +239,8 @@
 
 </body>
 
+<!-- Materalize JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 <!-- jQuery CDN -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Firebase Script -->
