@@ -3,6 +3,7 @@
 
 var apiKey = "39a2a8a2";
 
+
 //Jquery HTML Targets
 //=================================
 
@@ -323,36 +324,46 @@ $(document).ready(function() {
 
   $(".search-form").on("submit", function (event) {
     event.preventDefault();
+    // queryURL=omdbURL;
     $("#movie-results-tbody").empty();
     var search = getSearchValue();
-    doMovieSearch(search);
+    var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
+    doMovieSearch(omdbURL);
   });
 });
 
-//EDAMAM RECIPE REQUEST API EVENT HANDLEY
+//EDAMAM RECIPE REQUEST API EVENT HANDLER
 //==================================================
-$("#food-list").on("click", "tr", function() {
+$("body").on("click", ".food-item", function() {
+  search=$(this).attr("data-name");
+  // queryURL=edamamURL;
   console.log("clicked the food list item");
   $("#recipe-results-tbody").empty();
-  var search = getSearchValue();
-  console.log(search);
-  doFoodSearch(search);
+  // var search = getSearchValue();
+  var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
+  console.log(nameUnclean(search));
+  console.log(edamamURL);
+  doFoodSearch(nameUnclean(edamamURL));
+
+
+
+
 });
 
 //List of Movie API Functions
 //=======================================================
-function doMovieSearch(search) {
-  var queryURL = getQueryURL(search);
+function doMovieSearch(url) {
+  // var queryURL = getQueryURL(search);
   $.ajax({
-    url: queryURL,
+    url: url,
     method: "GET"
   }).then(populateMovieTable);
 }
-//First OMDB AJAX Call: Grab list of relevant titles
-function doFoodSearch(search){
-  var queryURL = getQueryURL(search);
+// EDAMAM AJAX Call: Grab list of relevant foods
+function doFoodSearch(url){
+  // var queryURL = getQueryURL(search);
   $.ajax({
-    url: queryURL,
+    url: url,
     method: "GET"
   }).then(populateRecipeTable);
 }
@@ -388,15 +399,14 @@ function populateMovieRow(limitedMovieList) {
   var $newMovie = $("<tr>");
 
   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
-  var titleClean = limitedMovieList.Title;
-  titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
 
-  $newMovie.addClass("movie-item").attr("data-name", titleClean);
+  $newMovie.addClass("movie-item").attr("data-name", nameClean(limitedMovieList.Title));
+
 
   //filling in the columns with the relevant information from each object in the limitedMovieList array
   $newMovie
-    .append(`<td scope="row">${limitedMovieList.Title}</td>`)
-    .append(`<td scope="row">${limitedMovieList.Plot}</td>`)
+    .append(`<td scope="row"><h1>${limitedMovieList.Title}</h1></td>`)
+    .append(`<td scope="row"><p>${limitedMovieList.Plot}<p></td>`)
     .append(`<td scope="row"><img src=${limitedMovieList.Poster}></td>`);
   $("#movie-results-tbody").append($newMovie);
 }
@@ -406,45 +416,57 @@ function populateMovieRow(limitedMovieList) {
 function populateRecipeTable(recipeResponse) {
   //show hide containers
   showHideSwitch(4);
-  var recipeData = recipeResponse.Hits;
-  var limitedRecipeList = recipeData.slice(0, 10);
-  for (i = 0; i < limitedRecipeList.length; i++) {
-    populateRecipeRow(limitedRecipeList);
-  }
-}
+  console.log(recipeResponse);
+  var recipeData = recipeResponse.hits;
+  console.log(recipeData[1]);
+  console.log(recipeData[1].recipe.label);
 
-function populateRecipeRow(limitedRecipeList) {
+
+  for (i = 0; i < 5; i++) {
+    // populateRecipeRow(recipeData[i]);
+
   var $newRecipe = $("<tr>");
 
   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
-  var titleClean = limitedRecipeList.label;
-  titleClean = titleClean.replace(/\s+/g, "-").toLowerCase();
+  var recipeName = recipeData[i].label;
 
-  $newRecipe.addClass("movie-item").attr("data-name", titleClean);
+
+
+
+  $newRecipe.addClass(".food-item").attr("data-name", recipeName);
 
   //filling in the columns with the relevant information from each object in the limitedMovieList array
   $newRecipe
-    .append(`<td scope="row">${limitedRecipeList.label}</td>`)
-    .append(`<td scope="row">${limitedRecipeList.url}</td>`)
-    .append(`<td scope="row"><img src=${limitedRecipeList.image}></td>`);
+    .append(`<td scope="row">${recipeData[i].recipe.label}</td>`)
+    .append(`<td scope="row">${recipeData[i].recipe.url}</td>`)
+    .append(`<td scope="row">${recipeData[i].recipe.source}</td>`)
+    .append(`<td scope="row">${recipeData[i].recipe.healthLabels}</td>`)
+    .append(`<td scope="row"><img src=${recipeData[i].recipe.image}></td>`)
+  ;
   $("#recipe-results-tbody").append($newRecipe);
-}
-//================
-function getQueryURL(search) {
-  var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
-  var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
-  var queryURL = "";
-  // The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
-  if ($("#customRadioInline1").is(":checked")) {
-    queryURL = omdbURL;
-  } else if ($("#customRadioInline2").is(":checked")) {
-    queryURL = edamamURL;
-  } else {
-    gueryURL=edamamURL;
-    //form validation
   }
-  return queryURL;
+  console.log(recipeName);
 }
+
+// function populateRecipeRow(recipeData[i]) {
+  
+// }
+//================
+// function getQueryURL(search) {
+//   var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
+//   var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
+  
+//   //The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
+//   if ($("#customRadioInline1").is(":checked")) {
+//     queryURL = omdbURL;
+//   } else if ($("#customRadioInline2").is(":checked")) {
+//     queryURL = edamamURL;
+//   } else {
+//     queryURL=edamamURL;
+//     //form validation
+//   }
+//   return queryURL;
+// }
 
 function getSearchValue() {
   var search;
