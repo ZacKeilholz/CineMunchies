@@ -147,7 +147,7 @@ $(document).ready(function() {
       var a = $("<button>");
 
       // Adding a class of artist-btn to our button
-      a.addClass("waves-effect waves-light btn");
+      a.addClass("waves-effect waves-light btn trend-item text-capitalize");
 
       // Adding a data-attribute
       a.attr("data-name", nameClean(trendItem));
