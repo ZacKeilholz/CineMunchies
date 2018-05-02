@@ -21,7 +21,7 @@ function showHideSwitch(param) {
     //Page 2- Movie search input has been entered and submitted
     case (2):
 
-      $("#first-page-search").hide();
+      $("#first-page-search,#about-container").hide();
       $("#second-page-search,#movie-results-container").show();
 
       break;
@@ -30,7 +30,7 @@ function showHideSwitch(param) {
     case (3):
     console.log("HIDING PAGE 1-2");
       $("#first-page-search,#second-container").hide();
-      $("#third-container").show();
+      $("#third-container,#about-container").show();
 
       break;
 
@@ -160,11 +160,26 @@ $(document).ready(function() {
   //MOVIE SEARCH RESULT OR FIREBASE TRENDING ITEM HAS BEEN CLICKED:
   //================================================================
 
-  $("body").on("click", ".movie-item,.trend-item", function () {
+  $("body").on("click", ".movie-item", function () {
     console.log("MOVIE ITEM CLICKED");
     //Show/Hide Containers
     showHideSwitch(3);
 
+    //Copy and Paste Movie Selection (Table Row) to 'About-Container' on Page 3 Food results
+    
+    //Get Selected Movie HTML Contents
+    var movieRowContents = $(this).clone();
+
+    //Clear Text Content from Page 1 and replace with new Text
+    $("#about-content").empty();
+    $("#about-content").text("You Selected:")
+
+    
+    //Fill Card at top of Page 3 with selected movie contents
+    $("#selected-movie-content").empty();
+    movieRowContents.appendTo("#selected-movie-content");
+    
+    
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
 
@@ -336,6 +351,19 @@ $(document).ready(function() {
   });
 });
 
+
+//When Trending Button Clicked, Do similar function as Search Form Submit and bring user to page 2-
+$("body").on("click",".trend-item",function() {
+  console.log("Trend Item Clicked");
+  $("#movie-results-tbody").empty();
+  var search = $(this).attr("data-name");
+  console.log(search);
+  var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
+  doMovieSearch(omdbURL);
+})
+
+
+
 //EDAMAM RECIPE REQUEST API EVENT HANDLER
 //==================================================
 $("body").on("click", ".food-item", function() {
@@ -348,8 +376,6 @@ $("body").on("click", ".food-item", function() {
   console.log(nameUnclean(search));
   console.log(edamamURL);
   doFoodSearch(nameUnclean(edamamURL));
-
-
 
 
 });
