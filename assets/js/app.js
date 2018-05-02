@@ -474,3 +474,10 @@ function getSearchValue() {
   }
   return search;
 }
+
+// This is for the Materalize carousel
+
+$('.carousel.carousel-slider').carousel({
+  fullWidth: true,
+  indicators: true
+});
