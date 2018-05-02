@@ -3,6 +3,24 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
+nav {
+  margin-bottom:30px;
+}
+
+.brand-logo {
+  font-family: 'Lobster', cursive;
+  font-size:45px !important;
+}
+
+a {
+  width:100%
+}
+
+#header-icon {
+  font-size:45px;
+}
+
+
 .container {
   width: 100%;
 }
@@ -12,27 +30,6 @@ body {
   max-width: 960px;
   /* margin: 10px auto 50px auto; */
   clear: both;
-}
-
-.jumbotron {
-   background-color: white;
-   color: #702f34;
-}
-
-.jumbotron h1 {
-  font-size: 45px;
-  text-align: center;
-  font-family: 'Lobster', cursive;
-}
-
-.jumbotron i {
-  font-size: 35px;
-}
-
-.jumbotron a {
-   text-decoration: none;
-   background-color: white;
-   color: #702f34;
 }
 
 form {
@@ -58,9 +55,7 @@ form {
   margin-top: 10px;
 }
 
-img {
-  width: 120%;
-}
+
 
 #movie-results-container h1 {
   font-size: 28px;
