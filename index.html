@@ -24,15 +24,14 @@
 
 <body>
 
-  <div class="container" id="header-container">
-    <div class="jumbotron">
-      <a href="index.html"><h1>
-        <i class="material-icons">local_movies</i>
-        CineMunchies
-        <i class="material-icons">local_movies</i>
-      </h1></a>
-    </div>
-  </div>
+    <nav class="white" id="header-container">
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo  deep-orange-text text-darken-4">
+          <i class=" material-icons grey-text text-darken-4" id="header-icon">local_movies</i>
+          CineMunchies
+        </a>
+      </div>
+    </nav>
 
   <div class="container" id="main-container">
 
@@ -68,7 +67,7 @@
                 <input class="form-control search-clear" id="search-input" type="text" placeholder="Movie Title">
               </div>
               <button class="btn btn-primary" id="search-submit" type="submit">Search</button> -->
-            <!-- </form> -->
+              <!-- </form> -->
 
               <!-- Input Field -->
               <div class="row">
@@ -81,9 +80,9 @@
                   </div>
 
                   <div class="input-field col s6">
-                  <button class="btn waves-effect waves-light" type="submit" name="action" id="search-submit">Submit
-                  <i class="material-icons right">send</i>
-                  </button>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="search-submit">Submit
+                      <i class="material-icons right">send</i>
+                    </button>
                   </div>
                 </form>
               </div>
@@ -93,16 +92,16 @@
           <!-- Trending Movies  -->
           <div class="trendingMoviesDiv">
             <h5>CineMunchies Trending Movies:</h5>
-              <table>
-                <tbody id="trend-list">
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
+            <table>
+              <tbody id="trend-list">
+                <tr>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
         </div>
@@ -140,7 +139,7 @@
 
       <!-- Movie Results -->
       <div class="container" id="movie-results-container">
-       
+
         <div class="card">
 
           <div class="card-body">
@@ -177,17 +176,17 @@
         <div class="card col s12">
 
           <div class="section foodListDiv">
-            
-              <table>
-                <tbody id="food-list">
 
-                </tbody>
-              </table>
+            <table>
+              <tbody id="food-list">
+
+              </tbody>
+            </table>
 
           </div>
 
           <div class="row">
-      
+
             <div class="section" id="add-food">
               <p class="card-text">CineMunchie not listed above? Add yours here!</p>
               <input class="form-control" id="add-food-input" type="text" placeholder="Food">
