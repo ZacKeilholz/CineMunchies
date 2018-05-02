@@ -418,19 +418,32 @@ function populateRecipeCarousel(recipeResponse) {
   for (i = 0; i < 5; i++) {
     var recipeName = recipeData[i].recipe.label;
 
-    var $carouselItem = $(
+    var $carouselMain = $(
       "<div class='carousel-item' href='#" + numbers[i] + "!'>"
     );
-    $carouselItem.addClass("food-item");
-    $carouselItem.attr("data-name", recipeName);
-    $newRecipe.append($carouselItem);
+    var $carouselLabels = $(`<div class="recipe-image">`);
+    $carouselMain.addClass("food-item");
+    $carouselMain.attr("data-name", recipeName);
+    $newRecipe.append($carouselMain);
+    $carouselMain.append($carouselLabels);
     //filling in the columns with the relevant information from each object in the recipeData array
-    $carouselItem
-      .append(`<img src="${recipeData[i].recipe.image}">`)
+    $carouselMain
+      .append(
+        `<img src="${
+          recipeData[i].recipe.image
+        }">`
+      )
       .append(
         `<div class="carousel-fixed-item center"><a href="${
           recipeData[i].recipe.url
-        }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a><p class="white-text">SOURCE: ${recipeData[i].recipe.source}</p></div>`
+        }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a></div>`
+      );
+    $carouselLabels
+      .append(`<h3>${recipeName}</h3>`)
+      .append(
+        `<h5>SOURCE: ${
+          recipeData[i].recipe.source
+        }</h5>`
       );
   }
   var elems = document.querySelectorAll(".carousel");
@@ -477,7 +490,7 @@ function getSearchValue() {
 
 // This is for the Materalize carousel
 
-$('.carousel.carousel-slider').carousel({
+$(".carousel.carousel-slider").carousel({
   fullWidth: true,
   indicators: true
 });
