@@ -4,34 +4,41 @@ This is a group project for the University of Minnesota Coding Bootcamp Cohort 4
 
 <https://zackeilholz.github.io/CineMunchies/>
 
+# **Bug List 4/31/18**
+### **Front-End**
+### **Back-End**
+# **By Wednesday 5/2/18**
+## **Goals**
+#### **1: Have all bugs fixed and ready to test**
 
-## **Bug List 4/28/18**
+
+# **Bug List 4/28/18**
 ### **Front-End**
 #### **Page 1:**
-+ Clean up HTML ids and classes - Robyn Craig
-+ Set movie radio button as default radio button - Robyn Craig
++ ~~Clean up HTML ids and classes - Robyn Craig~~
++ ~~Set movie radio button as default radio button - Robyn Craig~~
 
 #### **Page 2:** 
 + ~~Hide first page search card after user hits submit - Kalsang Bhutia~~
-+ Set IMG size to be smaller -
++ ~~Set IMG size to be smaller -~~
     + ~~Search for thumbnail image in API doc to replace the current poster img - Kalsang Bhutia~~ 
-    + If thumbnail doesn't exist style each image to a preset height and width. - Robyn Craig 
-+ Adjust text styling sizes of title and plot - Robyn Craig
+    + ~~If thumbnail doesn't exist style each image to a preset height and width. - Robyn Craig~~ 
++ ~~Adjust text styling sizes of title and plot - Robyn Craig~~
 + ~~Movie rows need to be clickable (see Zac's firebase example- add in ) - Kalsang Bhutia~~
-+ Clear search and clear result - Kalsang Bhutia
-+ Limit results to five or ten in API call - Kalsang Bhutia
-+ Fix search and remove radio buttons - Robyn Craig
++ ~~Clear search and clear result - Kalsang Bhutia~~
++ ~~Limit results to five or ten in API call - Kalsang Bhutia~~
++ ~~Fix search and remove radio buttons - Robyn Craig~~
 
 #### **Page 3:**
-+ create the page 3 container for Zac to work with. 
++ ~~create the page 3 container for Zac to work with.-Robyn Craig~~
 
 #### **Page 4:**
-+ Add in Food API calls - Zac/Kalsang
++ ~~Add in Food API calls - Zac/Kalsang~~
 
 ### **Back-End**
 #### **Page 3:**
-+ Merge in the firebase code into the master branch - Zac Keilholz
-+ Fix case-sensitivity when inputing the foods into the movie-food list
++ ~~Merge in the firebase code into the master branch - Zac Keilholz~~
++ ~~Fix case-sensitivity when inputing the foods into the movie-food list~~
 
 # **Goal for End of Class:**
 
@@ -41,10 +48,12 @@ This is a group project for the University of Minnesota Coding Bootcamp Cohort 4
 
 #### **Get page 4 working**
 
-# **By Monday**
+# **By Monday 4/30/18**
 ## **Goals**
 #### **1: Talk about UI**
 #### **2: Come ready with list of libraries to intertwine with the project**
+
+# **Project Requirements**
 ### **The group project must meet these requirements:**
 + Must use at least two APIs (AJAX)  
 <https://github.com/toddmotto/public-apis>

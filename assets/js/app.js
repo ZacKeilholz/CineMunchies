@@ -3,42 +3,45 @@
 
 var apiKey = "39a2a8a2";
 
-
 //Jquery HTML Targets
 //=================================
 
 //Use this switch case for showing/hiding containers when pages change during on-click events
 function showHideSwitch(param) {
   switch (param) {
-
     //Page 1 Initial Search page
-    case (1):
+    case 1:
       $("#first-page-search").show();
-      $("#second-page-search,#third-container,#movie-results-container,#fourth-container").hide();
+      $(
+        "#second-page-search,#third-container,#movie-results-container,#fourth-container"
+      ).hide();
 
       break;
 
     //Page 2- Movie search input has been entered and submitted
+
     case (2):
 
       $("#first-page-search,#about-container").hide();
+
       $("#second-page-search,#movie-results-container").show();
 
       break;
 
     //Page 3 - Movie search result or trending movie  has been clicked
-    case (3):
-    console.log("HIDING PAGE 1-2");
+    case 3:
+      console.log("HIDING PAGE 1-2");
       $("#first-page-search,#second-container").hide();
       $("#third-container,#about-container").show();
 
       break;
 
     //Page 4 - Food result has been clicked
-    case (4):
-    console.log("HIDING PAGE 1-3");
-    $("#first-page-search,#second-container,#third-container").hide();
-    $("#fourth-container").show();
+    case 4:
+      console.log("HIDING PAGE 1-3");
+      $("#first-page-search,#second-container,#third-container,#about-container").hide();
+      $("#fourth-container").show();
+     
       break;
 
     default:
@@ -48,17 +51,13 @@ function showHideSwitch(param) {
 
 //Name Cleaner Function - Converts upper to lower case and swaps spaces for hyphens:
 function nameClean(textInput) {
-
   return textInput.replace(/\s+/g, "-").toLowerCase();
-
-};
+}
 
 //Name UnCleaner Function - Converts hyphenated name to spaced name for pretty html use
 function nameUnclean(textInput) {
-
   return textInput.replace("-", " ");
-
-};
+}
 //MAIN FUNCTION
 //==================================
 
@@ -66,9 +65,10 @@ $(document).ready(function() {
   //On document ready the radio buttons will be visible and the table that the API properties will populate will remain hidden.
   //NOTE: Switch these default show/hide methods to CSS set display to none after funcitonality problem is fixed.
 
-
   //Show hide containers
   showHideSwitch(1);
+
+  //Initialize Carousel
 
   // Initialize Firebase
   var config = {
@@ -93,10 +93,8 @@ $(document).ready(function() {
 
   var trendingToggle = true;
 
-
   //set database to the firebase database
   database = firebase.database();
-
 
   //FIREBASE
   //======================
@@ -104,10 +102,10 @@ $(document).ready(function() {
   //Firebase- TRENDING
 
   //Set Firebase Trending Database Location
-  var refTrending = database.ref('trending/movies');
+  var refTrending = database.ref("trending/movies");
 
   //Create Event Listener for any changes in the Trending Database
-  refTrending.on('value', retrieveFirebaseTrending, firebaseErrorData);
+  refTrending.on("value", retrieveFirebaseTrending, firebaseErrorData);
 
   //Uncomment this and use to remake database if trendData is deleted- (code will not function otherwise)..  Add this into a check function at some point:
   // var trendData = {
@@ -115,11 +113,9 @@ $(document).ready(function() {
   // }
   // refTrending.push(trendData);
 
-
   //This function retrieves the last 10 movies that were searched for and subsequently clicked on from the Firebase/Trending folder in the database and then inserts them onto page 1 as table rows.
 
   function retrieveFirebaseTrending(data) {
-
     // Clear out the trend list container each time this function is called
     $("#trend-list").empty();
 
@@ -128,10 +124,10 @@ $(document).ready(function() {
     var keys = Object.keys(trendObject);
 
     //Grab length of the trend list for use in the for loop
-    var highKeysLength = (keys.length)-1;
+    var highKeysLength = keys.length - 1;
 
     //For loop grabs searches from the END of the list and works back 10 items and displays them on page 1.
-    for (var i = highKeysLength; i > highKeysLength-10; i--) {
+    for (var i = highKeysLength; i > highKeysLength - 10; i--) {
       console.log("keys!");
       var k = keys[i];
       //Get the specific food value at this key
@@ -161,6 +157,7 @@ $(document).ready(function() {
   //================================================================
 
   $("body").on("click", ".movie-item", function () {
+
     console.log("MOVIE ITEM CLICKED");
     //Show/Hide Containers
     showHideSwitch(3);
@@ -189,38 +186,31 @@ $(document).ready(function() {
     //Get Target Firebase Location- we want the specific movie
     refMovies = database.ref("movies/" + movieName);
 
-    refMovies.once("value")
-      .then(function (snapshot) {
-        var a = snapshot.exists(); // true
-        if (!a) {
-
-          //Clear container
-          //There aren't any movies listed
-          //Create HTML Object to contain the food item
-          var foodListItem = $("<li>");
-          foodListItem.text("Be the first to add a munchie to this movie!")
-
-        } else {
-
-          //Firebase function - call firebase and spit out food data onto the page for THIS movie
-          refMovies.on('value', pullFirebaseData, firebaseErrorData);
-
-        }
-      });
-
+    refMovies.once("value").then(function(snapshot) {
+      var a = snapshot.exists(); // true
+      if (!a) {
+        //Clear container
+        //There aren't any movies listed
+        //Create HTML Object to contain the food item
+        var foodListItem = $("<li>");
+        foodListItem.text("Be the first to add a munchie to this movie!");
+      } else {
+        //Firebase function - call firebase and spit out food data onto the page for THIS movie
+        refMovies.on("value", pullFirebaseData, firebaseErrorData);
+      }
+    });
 
     //Add clicked movie to Firebase Trending List (This also adds a clicked trend onto the trend list)
     trendData = {
       movieName: nameClean(movieName)
-    }
+    };
     refTrending.push(trendData);
-
   });
 
   //ADDING NEW FOOD ITEM TO FIREBASE (FORM SUBMIT)
   //================================================
 
-  $("body").on("click", "#add-food-submit", function (event) {
+  $("body").on("click", "#add-food-submit", function(event) {
     event.preventDefault();
 
     uniqueToggle = false;
@@ -293,7 +283,9 @@ $(document).ready(function() {
       var $newDiv = $("<div>");
       $newDiv.addClass("row");
       // Adding a class of artist-btn to our button
-      a.addClass("waves-effect center-align waves-light btn food-item text-capitalize");
+      a.addClass(
+        "waves-effect center-align waves-light btn food-item text-capitalize"
+      );
 
       // Adding a data-attribute
       a.attr("data-name", nameClean(foodItem));
@@ -303,7 +295,6 @@ $(document).ready(function() {
 
       $newDiv.append(a);
       $("#food-list").append($newDiv);
-
     }
   }
 
@@ -341,7 +332,7 @@ $(document).ready(function() {
 
   // when form is submitted the API call will be made
 
-  $(".search-form").on("submit", function (event) {
+  $(".search-form").on("submit", function(event) {
     event.preventDefault();
     // queryURL=omdbURL;
     $("#movie-results-tbody").empty();
@@ -367,16 +358,18 @@ $("body").on("click",".trend-item",function() {
 //EDAMAM RECIPE REQUEST API EVENT HANDLER
 //==================================================
 $("body").on("click", ".food-item", function() {
-  search=$(this).attr("data-name");
+  search = $(this).attr("data-name");
   // queryURL=edamamURL;
   console.log("clicked the food list item");
-  $("#recipe-results-tbody").empty();
+  $("recipe-results").empty();
   // var search = getSearchValue();
-  var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
+  var edamamURL =
+    "https://api.edamam.com/search?q=" +
+    search +
+    "&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
   console.log(nameUnclean(search));
   console.log(edamamURL);
   doFoodSearch(nameUnclean(edamamURL));
-
 
 });
 
@@ -390,12 +383,12 @@ function doMovieSearch(url) {
   }).then(populateMovieTable);
 }
 // EDAMAM AJAX Call: Grab list of relevant foods
-function doFoodSearch(url){
+function doFoodSearch(url) {
   // var queryURL = getQueryURL(search);
   $.ajax({
     url: url,
     method: "GET"
-  }).then(populateRecipeTable);
+  }).then(populateRecipeCarousel);
 }
 //Limit the data from the first AJAX call and loop over each result
 function populateMovieTable(searchResponse) {
@@ -430,52 +423,68 @@ function populateMovieRow(limitedMovieList) {
 
   //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
 
-  $newMovie.addClass("movie-item").attr("data-name", nameClean(limitedMovieList.Title));
-
+  $newMovie
+    .addClass("movie-item")
+    .attr("data-name", nameClean(limitedMovieList.Title));
 
   //filling in the columns with the relevant information from each object in the limitedMovieList array
   $newMovie
     .append(`<td scope="row"><h1>${limitedMovieList.Title}</h1></td>`)
     .append(`<td scope="row"><p>${limitedMovieList.Plot}<p></td>`)
-    .append(`<td scope="row"><img class="responsive-img" src=${limitedMovieList.Poster}></td>`);
+    .append(
+      `<td scope="row"><img class="responsive-img" src=${
+        limitedMovieList.Poster
+      }></td>`
+    );
   $("#movie-results-tbody").append($newMovie);
 }
 //List of Food API functions
 //===============================================
 
-function populateRecipeTable(recipeResponse) {
+function populateRecipeCarousel(recipeResponse) {
   //show hide containers
   showHideSwitch(4);
   console.log(recipeResponse);
   var recipeData = recipeResponse.hits;
-  console.log(recipeData[1]);
-  console.log(recipeData[1].recipe.label);
+  var $newRecipe = $(".recipe-item");
 
-
+  var numbers = ["one", "two", "three", "four", "five"];
   for (i = 0; i < 5; i++) {
-    // populateRecipeRow(recipeData[i]);
+    var recipeName = recipeData[i].recipe.label;
 
-  var $newRecipe = $("<tr>");
-
-  //prepping the data to go into firebase database with hyphens instead of spaces in movie titles
-  var recipeName = recipeData[i].label;
-
-
-
-
-  $newRecipe.addClass(".food-item").attr("data-name", recipeName);
-
-  //filling in the columns with the relevant information from each object in the limitedMovieList array
-  $newRecipe
-    .append(`<td scope="row">${recipeData[i].recipe.label}</td>`)
-    .append(`<td scope="row">${recipeData[i].recipe.url}</td>`)
-    .append(`<td scope="row">${recipeData[i].recipe.source}</td>`)
-    .append(`<td scope="row">${recipeData[i].recipe.healthLabels}</td>`)
-    .append(`<td scope="row"><img src=${recipeData[i].recipe.image}></td>`)
-  ;
-  $("#recipe-results-tbody").append($newRecipe);
+    var $carouselMain = $(
+      "<div class='carousel-item' href='#" + numbers[i] + "!'>"
+    );
+    var $carouselLabels = $(`<div class="recipe-image">`);
+    $carouselMain.addClass("food-item");
+    $carouselMain.attr("data-name", recipeName);
+    $newRecipe.append($carouselMain);
+    $carouselMain.append($carouselLabels);
+    //filling in the columns with the relevant information from each object in the recipeData array
+    $carouselMain
+      .append(
+        `<img src="${
+          recipeData[i].recipe.image
+        }">`
+      )
+      .append(
+        `<div class="carousel-fixed-item center"><a href="${
+          recipeData[i].recipe.url
+        }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a></div>`
+      );
+    $carouselLabels
+      .append(`<h3>${recipeName}</h3>`)
+      .append(
+        `<h5>SOURCE: ${
+          recipeData[i].recipe.source
+        }</h5>`
+      );
   }
-  console.log(recipeName);
+  var elems = document.querySelectorAll(".carousel");
+  var instance = M.Carousel.init(elems, {
+    fullWidth: true,
+    indicators: true
+  });
 }
 
 // function populateRecipeRow(recipeData[i]) {
@@ -501,21 +510,21 @@ function populateRecipeTable(recipeResponse) {
 function getSearchValue() {
   var search;
   var secondSearchVisible = $("#second-search-form").is(":visible");
-  var movieFoodVisible= $("#movie-food-container").is(":visible");
+  var movieFoodVisible = $("#movie-food-container").is(":visible");
   //this logic decides which search input to grab values from for the API call
   if (secondSearchVisible) {
     search = $("#search-again-input").val();
-  } else if (movieFoodVisible){
-   search=$(".food-item").attr("data-name");
-  }else{
-    search=$(".search-input").val();
+  } else if (movieFoodVisible) {
+    search = $(".food-item").attr("data-name");
+  } else {
+    search = $(".search-input").val();
   }
   return search;
 }
 
 // This is for the Materalize carousel
 
-$('.carousel.carousel-slider').carousel({
+$(".carousel.carousel-slider").carousel({
   fullWidth: true,
   indicators: true
 });
