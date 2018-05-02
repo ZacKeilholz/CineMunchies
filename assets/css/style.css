@@ -51,11 +51,13 @@ form {
   text-align: center;
 }
 
+#add-food-input {
+  width: 90%;
+}
+
 #add-food-submit {
   margin-top: 10px;
 }
-
-
 
 #movie-results-container h1 {
   font-size: 28px;
@@ -66,19 +68,45 @@ form {
   font-size: 14px;
 }
 
-.trendingMoviesDiv {
-  text-align: center;
-}
-
-
 .foodListDiv {
   text-align: center;
 }
 
+.trendingMoviesDiv {
+  text-align: center;
+}
+
+.trendingMoviesDiv h6 {
+  margin-bottom: 20px;
+}
+
 .trendingMoviesDiv button {
   margin-bottom: 10px;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
 }
 
 .trendingMoviesDiv tr {
   border: none;
+}
+
+.card-body {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+table.highlight tbody tr:hover {
+    background-color: #bf360c3d;
+}
+
+footer {
+  padding: 15px 0;
+  clear: both;
+  font-size: 12px;
+  color: #bf360c;
+  text-align: center;
+  background: #fff;
+  border-top: 4px solid #bf360c;
+  height: 50px;
 }
