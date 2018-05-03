@@ -1,6 +1,9 @@
 body {
   background: url("../images/cinema01.jpeg");
   font-family: 'Noto Sans', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 nav {
@@ -12,7 +15,7 @@ nav {
   font-size:45px !important;
 }
 
-a {
+.nav-wrapper a {
   width:100%
 }
 
@@ -20,16 +23,20 @@ a {
   font-size:45px;
 }
 
-
 .container {
   width: 100%;
+}
+
+/* this fixes about container so it's the same width as the other containers */
+#about-container .row .col {
+  padding: 0px;
 }
 
 #main-container {
   width: 90%;
   max-width: 960px;
-  /* margin: 10px auto 50px auto; */
   clear: both;
+  padding-top: 15px;
 }
 
 form {
@@ -59,12 +66,12 @@ form {
   margin-top: 10px;
 }
 
-#movie-results-container h1 {
+#movie-results-container h1, #about-container h1 {
   font-size: 28px;
   font-weight: bold;
 }
 
-#movie-results-container p {
+#movie-results-container p, #about-container p {
   font-size: 14px;
 }
 
@@ -85,6 +92,12 @@ form {
   font-size: 12px;
   height: 28px;
   line-height: 28px;
+  background-color: #007bff;
+  width: 50%;
+}
+
+.trendingMoviesDiv button:hover {
+  background-color: rgba(0, 123, 255, 0.7);
 }
 
 .trendingMoviesDiv tr {
@@ -100,13 +113,67 @@ table.highlight tbody tr:hover {
     background-color: #bf360c3d;
 }
 
+h4 {
+  font-weight: bold;
+}
+
+h3 {
+  font-family: 'Lobster', cursive;
+  font-size: 36px;
+}
+
+ul.indicators {
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 15%;
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 15px;
+}
 footer {
-  padding: 15px 0;
-  clear: both;
   font-size: 12px;
-  color: #bf360c;
   text-align: center;
-  background: #fff;
   border-top: 4px solid #bf360c;
-  height: 50px;
+}
+
+/* meterialize footer styling */
+main {
+  flex: 1 0 auto;
+}
+
+.page-footer {
+  background-color: #fff;
+  padding-top: 0px;
+}
+.page-footer .footer-copyright {
+  min-height: 0px;
+  background-color: #fff;
+  color: #bf360c;
+}
+/* media queries */
+
+@media only screen and (max-width: 960px) {
+  #movie-results-container h1 {
+      font-size: 14px;
+    }
+
+  #movie-results-container p {
+      font-size: 12px;
+    }
+
+  #about-container h1 {
+      font-size: 14px;
+    }
+
+  #about-container p {
+      font-size: 12px;
+    }
+
+}
+
+/* trending button */
+@media only screen and (max-width: 500px) {
+  .trendingMoviesDiv button {
+      width: 90%;
+    }
+
 }
