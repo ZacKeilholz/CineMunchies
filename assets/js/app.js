@@ -158,27 +158,22 @@ $(document).ready(function() {
 
   $("body").on("click", ".movie-item", function () {
 
-    console.log("MOVIE ITEM CLICKED");
     //Show/Hide Containers
     showHideSwitch(3);
 
     //Copy and Paste Movie Selection (Table Row) to 'About-Container' on Page 3 Food results
     
-    //Get Selected Movie HTML Contents
-    var movieRowContents = $(this).clone();
-
-    //Clear Text Content from Page 1 and replace with new Text
-    $("#about-content").empty();
-    $("#about-content").text("You Selected:")
-
-    
-    //Fill Card at top of Page 3 with selected movie contents
-    $("#selected-movie-content").empty();
-    movieRowContents.appendTo("#selected-movie-content");
-    
-    
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
+
+    //Clear Text Content from Page 1 About-Container and replace with new Text about movie
+    $("#about-content").empty();
+    var newH3 = $("<h3>");
+    newH3.addClass("text-capitalize");
+    newH3.text("CineMunchie listings for: "+ nameUnclean(movieName));
+    
+    $("#about-content").append(newH3);
+
 
     //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
     $("#add-food-submit").attr("data-name", movieName);
