@@ -146,7 +146,7 @@ $(document).ready(function() {
       a.attr("data-name", nameClean(trendItem));
 
       // Providing the initial button text
-      a.text(nameClean(trendItem));
+      a.text(nameUnclean(trendItem));
 
       $newRow.append(a);
       $("#trend-list").append($newRow);
@@ -291,7 +291,7 @@ $(document).ready(function() {
       a.attr("data-name", nameClean(foodItem));
 
       // Providing the initial button text
-      a.text(nameClean(foodItem));
+      a.text(nameUnclean(foodItem));
 
       $newDiv.append(a);
       $("#food-list").append($newDiv);
