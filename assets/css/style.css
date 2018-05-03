@@ -81,6 +81,7 @@ form {
 
 .trendingMoviesDiv {
   text-align: center;
+  padding-bottom: 15px;
 }
 
 .trendingMoviesDiv h6 {
@@ -122,13 +123,35 @@ h3 {
   font-size: 36px;
 }
 
+.carousel.carousel-slider .carousel-fixed-item.with-indicators {
+  float: right;
+  width: 175%;
+}
+
+.carousel .indicators {
+  margin: auto auto 5px auto;
+  height: 36px;
+}
+
 ul.indicators {
   background-color: rgba(0, 0, 0, 0.75);
   width: 15%;
-  margin: auto;
   margin-bottom: 10px;
   border-radius: 15px;
 }
+
+.carousel .indicators .indicator-item {
+  margin: 15px 4px;
+}
+
+#recipes-container .btn {
+  background-color: #007bff;
+}
+
+#recipes-container .btn:hover {
+  background-color: rgba(0, 123, 255, 0.7);
+}
+
 footer {
   font-size: 12px;
   text-align: center;
