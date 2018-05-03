@@ -24,6 +24,7 @@
 </head>
 
 <body>
+
   <div class="navbar-fixed">
     <nav class="white" id="header-container">
       <div class="nav-wrapper">
@@ -35,6 +36,8 @@
     </nav>
   </div>
 
+  <main>
+
   <div class="container" id="main-container">
 
     <!-- FIRST PAGE -->
@@ -42,7 +45,7 @@
 
       <div id="about-container">
         <div class="row">
-          <div class="col s12 m12">
+          <div class="col s12 m12 l12">
             <div class="card-panel white">
               <span class="black-text" id="about-content">Love a Movie, Need a Munchie? Use the search form below to enter the movie you would like to find munchies for. Bon Appétit!
               </span>
@@ -63,51 +66,32 @@
 
             <form role="form" class="search-form" id="first-search-form">
 
-              <!-- Radio Buttons -->
-              <!-- <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="customRadioInline1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">
-                  Movie
-                </label>
-              </div>
-
-              <div class="form-check disabled form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="customRadioInline2" value="option2" disabled>
-                <label class="form-check-label" for="exampleRadios3">
-                  Food (coming soon)
-                </label>
-              </div> -->
-
-              <!-- Input Field -->
-              <!-- <div class="form-group row">
-                <input class="form-control search-clear" id="search-input" type="text" placeholder="Movie Title">
-              </div>
-              <button class="btn btn-primary" id="search-submit" type="submit">Search</button> -->
-              <!-- </form> -->
-
               <!-- Input Field -->
               <div class="row">
-                <form class="col s6">
+                <form class="col">
 
-                  <div class="input-field col s8 m6 l12">
+                  <div class="input-field col s8 m6 l6">
                     <i class="material-icons prefix">movie_filter</i>
                     <input id="icon_prefix" type="text" class="search-input">
                     <label for="icon_prefix">Movie Here</label>
                   </div>
 
-                  <div class="input-field col s4 m6 l12">
+                  <div class="input-field col s4 m6 l6">
                     <button class="btn waves-effect waves-light" type="submit" name="action" id="search-submit">Submit
                       <i class="material-icons right">send</i>
                     </button>
                   </div>
+
                 </form>
               </div>
+
+            </form>
 
           </div>
 
           <!-- Trending Movies  -->
           <div class="trendingMoviesDiv">
-            <h6>Trending Movies Search:</h6>
+            <h6>CineMunchies Trending Movie Searches:</h6>
             <table>
               <tbody id="trend-list">
                 <tr>
@@ -135,12 +119,12 @@
 
           <div class="card-body">
 
-            <form role="form" class="search-form" id="second-search-form">
+            <!-- <form role="form" class="search-form" id="second-search-form">
 
-              <div class="row">
+              <div class="row"> -->
 
                 <!-- Input Field -->
-                <div class="col-md-8">
+                <!-- <div class="col-md-8">
                   <div class="form-group row">
                     <input class="form-control search-clear" id="search-again-input" type="text" placeholder="Movie Title">
                     <button class="btn btn-primary" id="search-again-submit" type="submit">Search Again</button>
@@ -148,7 +132,31 @@
                 </div>
 
               </div>
+            </form> -->
+
+            <form role="form" class="search-form" id="second-search-form">
+
+              <!-- Input Field -->
+              <div class="row">
+                <form class="col">
+
+                  <div class="input-field col s8 m6 l6">
+                    <i class="material-icons prefix">movie_filter</i>
+                    <input id="icon_prefix" type="text" class="search-again-input">
+                    <label for="icon_prefix">Movie Here</label>
+                  </div>
+
+                  <div class="input-field col s4 m6 l6">
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="search-again-submit">Search Again
+                      <i class="material-icons right">send</i>
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+
             </form>
+
           </div>
         </div>
       </div>
@@ -193,7 +201,7 @@
 
           <div class="section foodListDiv">
 
-            <h5>CineMunchies:</h5>
+            <h4>CineMunchies:</h4>
 
             <table>
               <tbody id="food-list">
@@ -207,8 +215,30 @@
 
             <div class="section" id="add-food">
               <p class="card-text">CineMunchie not listed above? Add yours here!</p>
-              <input class="form-control" id="add-food-input" type="text" placeholder="Food">
-              <button class="btn btn-primary" id="add-food-submit" type="submit">Add Food</button>
+              <!-- <input class="form-control" id="add-food-input" type="text" placeholder="Food">
+              <button class="btn btn-primary" id="add-food-submit" type="submit">Add Food</button> -->
+              <form role="form" class="search-form" id="second-search-form">
+
+                <!-- Input Field -->
+                <div class="row">
+                  <form class="col">
+
+                    <div class="input-field col s8 m6 l6">
+                      <i class="material-icons prefix">local_pizza</i>
+                      <input id="icon_prefix" type="text" class="add-food-input">
+                      <label for="icon_prefix">Add a Munchie</label>
+                    </div>
+
+                    <div class="input-field col s4 m6 l6">
+                      <button class="btn waves-effect waves-light" type="submit" name="action" id="search-again-submit">Submit
+                        <i class="material-icons right">send</i>
+                      </button>
+                    </div>
+
+                  </form>
+                </div>
+
+              </form>
             </div>
           </div>
 
@@ -235,11 +265,22 @@
 
   </div>
 
-  <footer>
+  </main>
+
+  <!-- <footer>
     <div class="container">
       Copyright 2018 &copy; Team Urkel
     </div>
+  </footer> -->
+
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2018 Team Urkel
+      </div>
+    </div>
   </footer>
+
 
 </body>
 
