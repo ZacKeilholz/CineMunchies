@@ -110,3 +110,15 @@ footer {
   border-top: 4px solid #bf360c;
   height: 50px;
 }
+
+/* media queries */
+
+@media only screen and (min-width: 0) {
+  #movie-results-container h1 {
+      font-size: 14px;
+    }
+
+  #movie-results-container p {
+      font-size: 12px;
+    }
+}
