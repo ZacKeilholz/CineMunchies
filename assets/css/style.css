@@ -1,5 +1,13 @@
 body {
-  background: url("../images/cinema01.jpeg");
+  background: url("../images/yellowPopcornLight.png");
+  /* background-color: #FF6B5E; */
+    background-position: center center;    
+  /*
+
+  #E6E6E6
+  #F4CE33
+  */
+  background-color:   #F4CE33;
   font-family: 'Noto Sans', sans-serif;
   display: flex;
   min-height: 100vh;
@@ -25,6 +33,7 @@ nav {
 
 .container {
   width: 100%;
+  border-radius:10px !important;
 }
 
 /* this fixes about container so it's the same width as the other containers */
