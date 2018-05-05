@@ -460,7 +460,7 @@ function populateRecipeCarousel(recipeResponse) {
     );
     var $carouselLabels = $(`<div class="recipe-titles">`);
     var $carouselImage = $(
-      "<img style='height: 100%; width: 100%; object-fit: contain;' src='"+recipeData[i].recipe.image+"'>");
+      "<img style='max-width:100%;max-height:100%;' src='"+recipeData[i].recipe.image+"'>");
       $carouselMain.append(
         `<div class="carousel-fixed-item center"><a href="${
           recipeData[i].recipe.url
