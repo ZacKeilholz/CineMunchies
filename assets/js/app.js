@@ -392,7 +392,9 @@ function populateMovieTable(searchResponse) {
 
   //Validation if no movie is found in API call.
   if (searchResponse.Response === "False") {
-    $("#table-title").html("<div style='color:red'>Movie not found! Please try searching again.</div>");
+    $("#table-title").html(
+      "<div style='color:red'>Movie not found! Please try searching again.</div>"
+    );
   } else {
     $("#table-title").html("");
     var movieData = searchResponse.Search;
@@ -426,26 +428,25 @@ function populateMovieRow(limitedMovieList) {
     .addClass("movie-item")
     .attr("data-name", nameClean(limitedMovieList.Title));
 
-  //placholder logic for situations with no results:
-  // if(limitedMovieList.Plot=="N/A"){
-  //   limitedMovieList.Plot ="Things are definitely happening in this movie or show. I know it.";
+  //placeholder logic for situations with no results:
+  if (limitedMovieList.Plot == "N/A") {
+    limitedMovieList.Plot =
+      "Things are definitely happening in this movie or show. I know it.";
+  }
 
-  // }
-
-  // if(limitedmovieList.Poster="N/A"){
-  //   $imgPlaceholder.src="../images/placeholder_image.png";
-  //   limitedmovieList.Poster=$imgPlaceholder.src;
-  // }
+  if (limitedMovieList.Poster == "N/A") {
+    $imgPlaceholder.src = "assets/images/movie_placeholder.png";
+    limitedMovieList.Poster = $imgPlaceholder.src;
+  }
 
   //filling in the columns with the relevant information from each object in the limitedMovieList array
   $newMovie
     .append(`<td scope="row"><h1>${limitedMovieList.Title}</h1></td>`)
     .append(`<td scope="row"><p>${limitedMovieList.Plot}<p></td>`)
-    .append(
-      `<td scope="row"><img class="responsive-img" src=${
-        limitedMovieList.Poster
-      }></td>`
+    .append(`<td scope="row"><img class="responsive-img" src=${limitedMovieList.Poster}></td>`
     );
+
+  console.log($newMovie);
   $("#movie-results-tbody").append($newMovie);
 }
 
@@ -464,61 +465,60 @@ function populateRecipeCarousel(recipeResponse) {
   //show hide containers
   showHideSwitch(4);
 
-//Validation if no recipe is found in API call
-  if (recipeResponse.count==0){
+  //Validation if no recipe is found in API call
+  if (recipeResponse.count == 0) {
     $("#recipe-error").show();
     $(".recipe-item").hide();
     $("#third-container").show();
-    $("#recipe-error").html("<div style='color:red;'>   Munchie not found, please try searching again.</div>");
-    $()
-  } 
-  else{
-$("#recipe-error").text("");
-$("#third-container").hide();
-$(".recipe-item").show();
-  var recipeData = recipeResponse.hits;
-  var $newRecipe = $(".recipe-item");
+    $("#recipe-error").html(
+      "<div style='color:red;'>   Munchie not found, please try searching again.</div>"
+    );
+    $();
+  } else {
+    $("#recipe-error").text("");
+    $("#third-container").hide();
+    $(".recipe-item").show();
+    var recipeData = recipeResponse.hits;
+    var $newRecipe = $(".recipe-item");
 
-  var numbers = ["one", "two", "three", "four", "five"];
-  for (i = 0; i < 5; i++) {
-    var recipeName = recipeData[i].recipe.label;
-    var $anchorURL = $(
-      "<a class='recipe-link' href=" + recipeData[i].recipe.url + ">"
-    );
-    var $carouselMain = $(
-      "<div class='carousel-item'  href='#" + numbers[i] + "!'>"
-    );
-    var $carouselLabels = $(`<div class="recipe-titles">`);
-    var $carouselImage = $(
-      "<img class='responsive-img' src='" +
-        recipeData[i].recipe.image +
-        "'>"
-    );
-    $carouselMain.append(
-      `<div class="carousel-fixed-item center"><a href="${
-        recipeData[i].recipe.url
-      }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a></div>`
-    );
-    $carouselMain.addClass("food-item");
-    $carouselMain.attr("data-name", recipeName);
-    $newRecipe.append($carouselMain);
-    $carouselMain.wrap($anchorURL);
-
-    //filling in the columns with the relevant information from each object in the recipeData array
-    $carouselLabels
-      .append(`<h3 class='header-font' 'center-align'>${recipeName}</h3>`)
-      .append(
-        `<h5 class='header-font' 'center-align'> SOURCE: ${
-          recipeData[i].recipe.source
-        }</h5>`
+    var numbers = ["one", "two", "three", "four", "five"];
+    for (i = 0; i < 5; i++) {
+      var recipeName = recipeData[i].recipe.label;
+      var $anchorURL = $(
+        "<a class='recipe-link' href=" + recipeData[i].recipe.url + ">"
       );
-    $carouselMain.append($carouselLabels);
-    $carouselMain.append($carouselImage);
+      var $carouselMain = $(
+        "<div class='carousel-item'  href='#" + numbers[i] + "!'>"
+      );
+      var $carouselLabels = $(`<div class="recipe-titles">`);
+      var $carouselImage = $(
+        "<img class='responsive-img' src='" + recipeData[i].recipe.image + "'>"
+      );
+      $carouselMain.append(
+        `<div class="carousel-fixed-item center"><a href="${
+          recipeData[i].recipe.url
+        }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a></div>`
+      );
+      $carouselMain.addClass("food-item");
+      $carouselMain.attr("data-name", recipeName);
+      $newRecipe.append($carouselMain);
+      $carouselMain.wrap($anchorURL);
+
+      //filling in the columns with the relevant information from each object in the recipeData array
+      $carouselLabels
+        .append(`<h3 class='header-font' 'center-align'>${recipeName}</h3>`)
+        .append(
+          `<h5 class='header-font' 'center-align'> SOURCE: ${
+            recipeData[i].recipe.source
+          }</h5>`
+        );
+      $carouselMain.append($carouselLabels);
+      $carouselMain.append($carouselImage);
+    }
+    var elems = document.querySelectorAll(".carousel");
+    var instance = M.Carousel.init(elems, {
+      fullWidth: true,
+      indicators: true
+    });
   }
-  var elems = document.querySelectorAll(".carousel");
-  var instance = M.Carousel.init(elems, {
-    fullWidth: true,
-    indicators: true
-  });
-}
 }
