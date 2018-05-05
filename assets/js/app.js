@@ -10,7 +10,7 @@ function showHideSwitch(param) {
     case 1:
       $("#first-page-search").show();
       $(
-        "#second-page-search,#third-container,#movie-results-container,#fourth-container"
+        "#second-page-search,#third-container,#movie-results-container,#fourth-container,#recipe-error"
       ).hide();
 
       break;
@@ -392,9 +392,9 @@ function populateMovieTable(searchResponse) {
 
   //Validation if no movie is found in API call.
   if (searchResponse.Response === "False") {
-    $("#table-title").text("Movie not found! Please try searching again.");
+    $("#table-title").html("<div style='color:red'>Movie not found! Please try searching again.</div>");
   } else {
-    $("#table-title").text("");
+    $("#table-title").html("");
     var movieData = searchResponse.Search;
     var limitedMovieList = movieData.slice(0, 5);
     for (i = 0; i < limitedMovieList.length; i++) {
@@ -466,12 +466,16 @@ function populateRecipeCarousel(recipeResponse) {
 
 //Validation if no recipe is found in API call
   if (recipeResponse.count==0){
-    $(".recipe-item").html("<div class='recipe-error' style='color:red;font-size:24px;'>Munchie not found, please try searching again.</div>");
+    $("#recipe-error").show();
+    $(".recipe-item").hide();
     $("#third-container").show();
+    $("#recipe-error").html("<div style='color:red;'> Munchie not found, please try searching again.</div>");
+    $()
   } 
   else{
-$(".recipe-error").text("");
+$("#recipe-error").text("");
 $("#third-container").hide();
+$(".recipe-item").show();
   var recipeData = recipeResponse.hits;
   var $newRecipe = $(".recipe-item");
 
