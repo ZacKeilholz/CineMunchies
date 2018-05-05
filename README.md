@@ -119,10 +119,10 @@ Stick to APIs with these features:
 + Well documented
 
 # Tools
-+ Trello for project management  
-+ Github projects
-+ Asana 
-+ JIRA
++ ~~Trello for project management~~
++ ~~Github projects~~
++ ~~Asana~~ 
++ **JIRA - We decided to use JIRA**
 
 # Group Name Ideas:
  ## Team Urkel
@@ -130,10 +130,9 @@ Stick to APIs with these features:
 
 # Group To-Dos
 1.  ~~Come up with a group name.~~   
-2. Create a slack channel instead of just DMing. 
-3. ~~Come up with useful project ideas~~
-4. ~~Find and decide on several APIs that can be used~~
-5. ~~Discuss roles based on group project recommendations?~~
+1. ~~Come up with useful project ideas~~
+1. ~~Find and decide on several APIs that can be used~~
+1. ~~Discuss roles based on group project recommendations?~~
 
 
 # Due by end of class 4/23/18
@@ -161,7 +160,7 @@ Kalsang Bhutia
 ## **Description:**
 CineMunchies will provide users with a curated list of recipes that appear in movies and television shows they watch. All the user has to do is search for their show or movie and the site will populate a list of recipes for foods that appear in it. 
 
-## **Balsamique Sketch:**  
+## **Balsamiq Sketch:**  
 Located in the preProjectAssets folder of the repo.  
 
 <https://github.com/ZacKeilholz/CineMunchies/tree/master/preProjectAssets>
@@ -172,18 +171,12 @@ Located in the preProjectAssets folder of the repo.
 Edamam  
 <https://developer.edamam.com/edamam-recipe-api>  
 
-Spoonacular  
-<https://spoonacular.com/food-api>
-
-Youtube  
-<https://www.youtube.com/yt/dev/api-resources.html>
-
 ### **Movie APIs:**
 OMDB  
 <http://www.omdbapi.com/>
 
 ### **Trending APIs**
-
+**Future Functionality:**  
 Twitter  
 <https://developer.twitter.com/en/docs/trends/trends-for-location/api-reference>
 
