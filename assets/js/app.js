@@ -461,6 +461,11 @@ function populateRecipeCarousel(recipeResponse) {
     var $carouselLabels = $(`<div class="recipe-titles">`);
     var $carouselImage = $(
       "<img style='height: 100%; width: 100%; object-fit: contain;' src='"+recipeData[i].recipe.image+"'>");
+      $carouselMain.append(
+        `<div class="carousel-fixed-item center"><a href="${
+          recipeData[i].recipe.url
+        }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a></div>`
+      );
     $carouselMain.addClass("food-item");
     $carouselMain.attr("data-name", recipeName);
     $newRecipe.append($carouselMain);
