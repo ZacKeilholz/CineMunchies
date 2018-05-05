@@ -1,7 +1,7 @@
 body {
   background: url("../images/yellowPopcornLight.png");
   /* background-color: #FF6B5E; */
-    background-position: center center;    
+    background-position: center center;
   /*
 
   #E6E6E6
@@ -33,6 +33,7 @@ nav {
 .header-font{
   font-family: 'Passion One', cursive;
   color:#212121;
+  font-size: 22px;
 }
 
 .container {
@@ -67,18 +68,6 @@ form {
   margin-top: 15px;
 }
 
-#add-food {
-  text-align: center;
-}
-
-#add-food-input {
-  width: 90%;
-}
-
-#add-food-submit {
-  margin-top: 10px;
-}
-
 #movie-results-container h1, #about-container h1 {
   font-size: 28px;
   font-weight: bold;
@@ -86,10 +75,6 @@ form {
 
 #movie-results-container p, #about-container p {
   font-size: 14px;
-}
-
-.foodListDiv {
-  text-align: center;
 }
 
 .trendingMoviesDiv {
@@ -118,6 +103,23 @@ form {
   border: none;
 }
 
+.foodListDiv {
+  text-align: center;
+}
+
+.foodListDiv button {
+  width: 50%;
+}
+
+#add-food {
+  text-align: center;
+}
+
+#add-food-submit {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
 .card-body {
   padding-left: 20px;
   padding-right: 20px;
@@ -127,34 +129,39 @@ table.highlight tbody tr:hover {
     background-color: #bf360c3d;
 }
 
-
-
 h3 {
   font-family: 'Lobster', cursive;
   font-size: 36px;
 }
 
+.carousel {
+    height: 550px !important;
+}
+
 .carousel.carousel-slider .carousel-fixed-item.with-indicators {
-  float: right;
-  width: 175%;
+  bottom: 20px;
 }
 
 .carousel .indicators {
   margin: auto auto 5px auto;
   height: 36px;
+  bottom: 70px;
 }
 
 ul.indicators {
   background-color: rgba(0, 0, 0, 0.75);
   width: 15%;
-  margin-bottom: 10px;
   border-radius: 15px;
+}
+
+.carousel .carousel-item>img {
+    width: 30%;
 }
 
 .carousel .indicators .indicator-item {
   margin: 15px 4px;
 }
-.carousel-item{
+.carousel-item {
   color:#c18519;
 }
 
@@ -211,6 +218,14 @@ main {
 @media only screen and (max-width: 500px) {
   .trendingMoviesDiv button {
       width: 90%;
+    }
+
+  .carousel .carousel-item>img {
+      width: 85%;
+    }
+
+  ul.indicators {
+    width: 30%;
     }
 
 }
