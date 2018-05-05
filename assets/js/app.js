@@ -446,36 +446,40 @@ function doFoodSearch(url) {
 function populateRecipeCarousel(recipeResponse) {
   //show hide containers
   showHideSwitch(4);
-  console.log(recipeResponse);
   var recipeData = recipeResponse.hits;
   var $newRecipe = $(".recipe-item");
 
   var numbers = ["one", "two", "three", "four", "five"];
   for (i = 0; i < 5; i++) {
     var recipeName = recipeData[i].recipe.label;
-    var $anchorURL = $("<a class='recipe-link' href=" + recipeData[i].recipe.url + ">");
-    var $carouselMain = $(
-      "<div class='carousel-item' style='background-image:url(" +
-        recipeData[i].recipe.image +
-        ");  background-repeat:no-repeat;background-size:300px 250px; background-position:center' href='#" +
-        numbers[i] +
-        "!'>"
+    var $anchorURL = $(
+      "<a class='recipe-link' href=" + recipeData[i].recipe.url + ">"
     );
-    var $carouselLabels = $(`<div class="recipe-image">`);
-  
+    var $carouselMain = $(
+      "<div class='carousel-item'  href='#" + numbers[i] + "!'>"
+    );
+    var $carouselLabels = $(`<div class="recipe-titles">`);
+    var $carouselImage = $(
+      "<img style='height: 100%; width: 100%; object-fit: contain;' src='"+recipeData[i].recipe.image+"'>");
     $carouselMain.addClass("food-item");
     $carouselMain.attr("data-name", recipeName);
-    $newRecipe.append($carouselMain);  
+    $newRecipe.append($carouselMain);
     $carouselMain.wrap($anchorURL);
-    $carouselMain.append($carouselLabels);
+
     //filling in the columns with the relevant information from each object in the recipeData array
     $carouselLabels
-      .append(`<h3 class='header-font'>${recipeName}</h3>`)
       .append(
-        `<h7 class='header-font' style='position: absolute;bottom:45px;text-align:center;'>SOURCE: ${
+        `<h3 class='header-font' 'center-align'>${recipeName}</h3>`
+      )
+      .append(
+        `<h5 class='header-font' 'center-align'> SOURCE: ${
           recipeData[i].recipe.source
-        }</h7>`
+        }</h5>`
       );
+ $carouselMain.append($carouselLabels);
+  $carouselMain.append($carouselImage);
+
+
   }
   var elems = document.querySelectorAll(".carousel");
   var instance = M.Carousel.init(elems, {
