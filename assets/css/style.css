@@ -32,7 +32,7 @@ nav {
 }
 .header-font{
   font-family: 'Passion One', cursive;
-  color:#6d6d6d;
+  color:#212121;
 }
 
 .container {
@@ -127,9 +127,7 @@ table.highlight tbody tr:hover {
     background-color: #bf360c3d;
 }
 
-h4 {
-  font-weight: bold;
-}
+
 
 h3 {
   font-family: 'Lobster', cursive;
