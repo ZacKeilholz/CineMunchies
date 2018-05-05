@@ -172,7 +172,14 @@ ul.indicators {
 #recipes-container .btn:hover {
   background-color: rgba(0, 123, 255, 0.7);
 }
-
+#recipe-error{
+  padding: 15px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 2px;
+  font-weight: bold;
+}
 footer {
   font-size: 12px;
   text-align: center;
