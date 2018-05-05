@@ -4,6 +4,29 @@ This is a group project for the University of Minnesota Coding Bootcamp Cohort 4
 
 <https://zackeilholz.github.io/CineMunchies/>
 
+## Presentation Notes: 
+1. Robyn (45 seconds)
+    + Description of Project: Summarize the project
+    + What problem does this product solve?
+    + What was the end result? 
+1. Kalsang (1 minute)
+    + Team Structure: Introduce everyone and go over what they worked on.
+        + Robyn: UI/UX (HTML/CSS/Bootstrap/Materialize)
+        + Zac: Firebase/Overall code architecture
+        + Kimberly: Project management and QA/Testing
+        + Kalsang: API calls
+    + Project Process: How did we decide on what project to pursue? 
+1. Zac Keilholz (1 minute)
+    + Techonologies we used 
+1. Kimberly (2 minutes)
+    + Live demonstration
+1. Kalsang (1 minute)
+    + Issues/challenges throughout the project
+1. Zac (1 minute)
+    + Successes and next steps (future features)
+
+
+
 # **Bug List 4/31/18**
 ### **Front-End**
 ### **Back-End**

@@ -3,9 +3,6 @@
 
 var apiKey = "39a2a8a2";
 
-//Jquery HTML Targets
-//=================================
-
 //Use this switch case for showing/hiding containers when pages change during on-click events
 function showHideSwitch(param) {
   switch (param) {
@@ -20,8 +17,7 @@ function showHideSwitch(param) {
 
     //Page 2- Movie search input has been entered and submitted
 
-    case (2):
-
+    case 2:
       $("#first-page-search,#about-container").hide();
 
       $("#second-page-search,#movie-results-container").show();
@@ -39,9 +35,11 @@ function showHideSwitch(param) {
     //Page 4 - Food result has been clicked
     case 4:
       console.log("HIDING PAGE 1-3");
-      $("#first-page-search,#second-container,#third-container,#about-container").hide();
+      $(
+        "#first-page-search,#second-container,#third-container,#about-container"
+      ).hide();
       $("#fourth-container").show();
-     
+
       break;
 
     default:
@@ -67,8 +65,6 @@ $(document).ready(function() {
 
   //Show hide containers
   showHideSwitch(1);
-
-  //Initialize Carousel
 
   // Initialize Firebase
   var config = {
@@ -156,24 +152,22 @@ $(document).ready(function() {
   //MOVIE SEARCH RESULT OR FIREBASE TRENDING ITEM HAS BEEN CLICKED:
   //================================================================
 
-  $("body").on("click", ".movie-item", function () {
-
+  $("body").on("click", ".movie-item", function() {
     //Show/Hide Containers
     showHideSwitch(3);
 
     //Copy and Paste Movie Selection (Table Row) to 'About-Container' on Page 3 Food results
-    
+
     //Get name of movie from movie data attribute
     var movieName = $(this).attr("data-name");
 
     //Clear Text Content from Page 1 About-Container and replace with new Text about movie
     $("#about-content").empty();
-    var newH3 = $("<h3>");
+    var newH3 = $("<h3 class='header-font'>");
     newH3.addClass("text-capitalize");
-    newH3.text("CineMunchie listings for: "+ nameUnclean(movieName));
-    
-    $("#about-content").append(newH3);
+    newH3.text("CineMunchie listings for: " + nameUnclean(movieName));
 
+    $("#about-content").append(newH3);
 
     //Set the add-food button data attribute = to this same name (changes the button every time a movie is pressed)
     $("#add-food-submit").attr("data-name", movieName);
@@ -337,18 +331,15 @@ $(document).ready(function() {
   });
 });
 
-
 //When Trending Button Clicked, Do similar function as Search Form Submit and bring user to page 2-
-$("body").on("click",".trend-item",function() {
+$("body").on("click", ".trend-item", function() {
   console.log("Trend Item Clicked");
   $("#movie-results-tbody").empty();
   var search = $(this).attr("data-name");
   console.log(search);
   var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
   doMovieSearch(omdbURL);
-})
-
-
+});
 
 //EDAMAM RECIPE REQUEST API EVENT HANDLER
 //==================================================
@@ -365,11 +356,26 @@ $("body").on("click", ".food-item", function() {
   console.log(nameUnclean(search));
   console.log(edamamURL);
   doFoodSearch(nameUnclean(edamamURL));
-
 });
 
 //List of Movie API Functions
 //=======================================================
+//Setting thhe value of var Search;
+function getSearchValue() {
+  var search;
+  var secondSearchVisible = $("#second-search-form").is(":visible");
+  var movieFoodVisible = $("#movie-food-container").is(":visible");
+  //this logic decides which search input to grab values from for the API call
+  if (secondSearchVisible) {
+    search = $("#search-again-input").val();
+  } else if (movieFoodVisible) {
+    search = $(".food-item").attr("data-name");
+  } else {
+    search = $(".search-input").val();
+  }
+  return search;
+}
+
 function doMovieSearch(url) {
   // var queryURL = getQueryURL(search);
   $.ajax({
@@ -377,14 +383,7 @@ function doMovieSearch(url) {
     method: "GET"
   }).then(populateMovieTable);
 }
-// EDAMAM AJAX Call: Grab list of relevant foods
-function doFoodSearch(url) {
-  // var queryURL = getQueryURL(search);
-  $.ajax({
-    url: url,
-    method: "GET"
-  }).then(populateRecipeCarousel);
-}
+
 //Limit the data from the first AJAX call and loop over each result
 function populateMovieTable(searchResponse) {
   //show hide containers
@@ -436,6 +435,14 @@ function populateMovieRow(limitedMovieList) {
 //List of Food API functions
 //===============================================
 
+// EDAMAM AJAX Call: Grab list of relevant foods
+function doFoodSearch(url) {
+  // var queryURL = getQueryURL(search);
+  $.ajax({
+    url: url,
+    method: "GET"
+  }).then(populateRecipeCarousel);
+}
 function populateRecipeCarousel(recipeResponse) {
   //show hide containers
   showHideSwitch(4);
@@ -446,33 +453,28 @@ function populateRecipeCarousel(recipeResponse) {
   var numbers = ["one", "two", "three", "four", "five"];
   for (i = 0; i < 5; i++) {
     var recipeName = recipeData[i].recipe.label;
-
+    var $anchorURL = $("<a class='recipe-link' href=" + recipeData[i].recipe.url + ">");
     var $carouselMain = $(
-      "<div class='carousel-item' href='#" + numbers[i] + "!'>"
+      "<div class='carousel-item' style='background-image:url(" +
+        recipeData[i].recipe.image +
+        ");  background-repeat:no-repeat;background-size:300px 250px; background-position:center' href='#" +
+        numbers[i] +
+        "!'>"
     );
     var $carouselLabels = $(`<div class="recipe-image">`);
+  
     $carouselMain.addClass("food-item");
     $carouselMain.attr("data-name", recipeName);
-    $newRecipe.append($carouselMain);
+    $newRecipe.append($carouselMain);  
+    $carouselMain.wrap($anchorURL);
     $carouselMain.append($carouselLabels);
     //filling in the columns with the relevant information from each object in the recipeData array
-    $carouselMain
-      .append(
-        `<img src="${
-          recipeData[i].recipe.image
-        }">`
-      )
-      .append(
-        `<div class="carousel-fixed-item center"><a href="${
-          recipeData[i].recipe.url
-        }" class="btn waves-effect primary white-text darken-text-2">GET RECIPE</a></div>`
-      );
     $carouselLabels
-      .append(`<h3>${recipeName}</h3>`)
+      .append(`<h3 class='header-font'>${recipeName}</h3>`)
       .append(
-        `<h5>SOURCE: ${
+        `<h7 class='header-font' style='position: absolute;bottom:45px;text-align:center;'>SOURCE: ${
           recipeData[i].recipe.source
-        }</h5>`
+        }</h7>`
       );
   }
   var elems = document.querySelectorAll(".carousel");
@@ -481,45 +483,3 @@ function populateRecipeCarousel(recipeResponse) {
     indicators: true
   });
 }
-
-// function populateRecipeRow(recipeData[i]) {
-
-// }
-//================
-// function getQueryURL(search) {
-//   var omdbURL = "https://www.omdbapi.com/?s=" + search + "&apikey=" + apiKey;
-//   var edamamURL = "https://api.edamam.com/search?q="+search+"&app_id=10d7528c&app_key=49ca2e4bece582180958e86e0b108257";
-
-//   //The API called is dependent on whether the movie radio id ("#customerRadioInLine1") or the food radio id ("#customRadioInline2") is selected.
-//   if ($("#customRadioInline1").is(":checked")) {
-//     queryURL = omdbURL;
-//   } else if ($("#customRadioInline2").is(":checked")) {
-//     queryURL = edamamURL;
-//   } else {
-//     queryURL=edamamURL;
-//     //form validation
-//   }
-//   return queryURL;
-// }
-
-function getSearchValue() {
-  var search;
-  var secondSearchVisible = $("#second-search-form").is(":visible");
-  var movieFoodVisible = $("#movie-food-container").is(":visible");
-  //this logic decides which search input to grab values from for the API call
-  if (secondSearchVisible) {
-    search = $("#search-again-input").val();
-  } else if (movieFoodVisible) {
-    search = $(".food-item").attr("data-name");
-  } else {
-    search = $(".search-input").val();
-  }
-  return search;
-}
-
-// This is for the Materalize carousel
-
-$(".carousel.carousel-slider").carousel({
-  fullWidth: true,
-  indicators: true
-});

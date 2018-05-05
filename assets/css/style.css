@@ -30,6 +30,10 @@ nav {
 #header-icon {
   font-size:45px;
 }
+.header-font{
+  font-family: 'Passion One', cursive;
+  color:#6d6d6d;
+}
 
 .container {
   width: 100%;
@@ -151,6 +155,9 @@ ul.indicators {
 
 .carousel .indicators .indicator-item {
   margin: 15px 4px;
+}
+.carousel-item{
+  color:#c18519;
 }
 
 #recipes-container .btn {

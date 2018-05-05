@@ -15,7 +15,7 @@
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Lobster|Noto+Sans:400,400i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Passion+One:400|Noto+Sans:400,400i,700,700i" rel="stylesheet">
 
   <!-- Google Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -38,93 +38,94 @@
 
   <main>
 
-  <div class="container" id="main-container">
+    <div class="container" id="main-container">
 
-    <!-- FIRST PAGE -->
-    <div class="container" id="first-container">
+      <!-- FIRST PAGE -->
+      <div class="container" id="first-container">
 
-      <div id="about-container">
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div class="card-panel white">
-              <span class="black-text" id="about-content">Love a Movie, Need a Munchie? Use the search form below to enter the movie you would like to find munchies for. Bon Appétit!
-              </span>
-              <table>
-                <tbody id="selected-movie-content"></tbody>
-              </table>
+        <div id="about-container">
+          <div class="row">
+            <div class="col s12 m12 l12">
+              <div class="card-panel white">
+                <span class="black-text" id="about-content">Love a Movie, Need a Munchie? Use the search form below to enter the movie you would like to find munchies
+                  for. Bon Appétit!
+                </span>
+                <table>
+                  <tbody id="selected-movie-content"></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Add Movie -->
-      <div class="container search-container" id="first-page-search">
+        <!-- Add Movie -->
+        <div class="container search-container" id="first-page-search">
 
-        <div class="card card-default">
+          <div class="card card-default">
 
-          <div class="card-body">
+            <div class="card-body">
 
-            <form role="form" class="search-form" id="first-search-form">
+              <form role="form" class="search-form" id="first-search-form">
 
-              <!-- Input Field -->
-              <div class="row">
-                <form class="col">
+                <!-- Input Field -->
+                <div class="row">
+                  <form class="col">
 
-                  <div class="input-field col s8 m6 l6">
-                    <i class="material-icons prefix">movie_filter</i>
-                    <input id="icon_prefix" type="text" class="search-input">
-                    <label for="icon_prefix">Movie Here</label>
-                  </div>
+                    <div class="input-field col s8 m6 l6">
+                      <i class="material-icons prefix">movie_filter</i>
+                      <input id="icon_prefix" type="text" class="search-input">
+                      <label for="icon_prefix">Movie Here</label>
+                    </div>
 
-                  <div class="input-field col s4 m6 l6">
-                    <button class="btn waves-effect waves-light" type="submit" name="action" id="search-submit">Submit
-                      <i class="material-icons right">send</i>
-                    </button>
-                  </div>
+                    <div class="input-field col s4 m6 l6">
+                      <button class="btn waves-effect waves-light" type="submit" name="action" id="search-submit">Submit
+                        <i class="material-icons right">send</i>
+                      </button>
+                    </div>
 
-                </form>
-              </div>
+                  </form>
+                </div>
 
-            </form>
+              </form>
 
-          </div>
+            </div>
 
-          <!-- Trending Movies  -->
-          <div class="trendingMoviesDiv">
-            <h6>CineMunchies Trending Movie Searches:</h6>
-            <table>
-              <tbody id="trend-list">
-                <tr>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+            <!-- Trending Movies  -->
+            <div class="trendingMoviesDiv">
+              <h6 class="header-font">CineMunchies Trending Movie Searches:</h6>
+              <table>
+                <tbody id="trend-list">
+                  <tr>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
           </div>
 
         </div>
-
       </div>
-    </div>
 
-    <!-- SECOND PAGE -->
-    <div class="container" id="second-container">
+      <!-- SECOND PAGE -->
+      <div class="container" id="second-container">
 
-      <!-- Search for a new movie -->
-      <div class="container search-container" id="second-page-search">
+        <!-- Search for a new movie -->
+        <div class="container search-container" id="second-page-search">
 
-        <div class="card card-default">
+          <div class="card card-default">
 
-          <div class="card-body">
+            <div class="card-body">
 
-            <!-- <form role="form" class="search-form" id="second-search-form">
+              <!-- <form role="form" class="search-form" id="second-search-form">
 
               <div class="row"> -->
 
-                <!-- Input Field -->
-                <!-- <div class="col-md-8">
+              <!-- Input Field -->
+              <!-- <div class="col-md-8">
                   <div class="form-group row">
                     <input class="form-control search-clear" id="search-again-input" type="text" placeholder="Movie Title">
                     <button class="btn btn-primary" id="search-again-submit" type="submit">Search Again</button>
@@ -134,89 +135,6 @@
               </div>
             </form> -->
 
-            <form role="form" class="search-form" id="second-search-form">
-
-              <!-- Input Field -->
-              <div class="row">
-                <form class="col">
-
-                  <div class="input-field col s8 m6 l6">
-                    <i class="material-icons prefix">movie_filter</i>
-                    <input id="search-again-input" type="text" class="">
-                    <label for="search-again-input">Movie Here</label>
-                  </div>
-
-                  <div class="input-field col s4 m6 l6">
-                    <button class="btn waves-effect waves-light" type="submit" name="action" id="search-again-submit">Search Again
-                      <i class="material-icons right">send</i>
-                    </button>
-                  </div>
-
-                </form>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Movie Results -->
-      <div class="container" id="movie-results-container">
-
-        <div class="card">
-
-          <div class="card-body">
-
-            <table class="highlight">
-              <thead>
-                <tr>
-                  <th colspan="3" id="table-title"></th>
-                </tr>
-              </thead>
-
-              <tbody id="movie-results-tbody">
-              </tbody>
-            </table>
-
-
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- THIRD PAGE -->
-    <div class="container" id="third-container">
-
-      <!-- Search for a new movie -->
-
-      <!-- THIS CAN BE THE SAME AS THE SEARCH FORM ON PAGE 2 -->
-
-      <!-- Food Results -->
-      <div class="row" id="movie-food-container">
-
-        <div class="card col s12">
-
-          <div class="section foodListDiv">
-
-            <h4>CineMunchies:</h4>
-
-            <table>
-              <tbody id="food-list">
-
-              </tbody>
-            </table>
-
-          </div>
-
-          <div class="row">
-
-            <div class="section" id="add-food">
-              <p class="card-text">CineMunchie not listed above? Add yours here!</p>
-              <!-- <input class="form-control" id="add-food-input" type="text" placeholder="Food">
-              <button class="btn btn-primary" id="add-food-submit" type="submit">Add Food</button> -->
               <form role="form" class="search-form" id="second-search-form">
 
                 <!-- Input Field -->
@@ -224,13 +142,13 @@
                   <form class="col">
 
                     <div class="input-field col s8 m6 l6">
-                      <i class="material-icons prefix">local_pizza</i>
-                      <input id="add-food-input" type="text" class="">
-                      <label for="add-food-input">Add a Munchie</label>
+                      <i class="material-icons prefix">movie_filter</i>
+                      <input id="search-again-input" type="text" class="">
+                      <label for="search-again-input">Movie Here</label>
                     </div>
 
                     <div class="input-field col s4 m6 l6">
-                      <button class="btn waves-effect waves-light" type="submit" name="action" id="add-food-submit">Submit
+                      <button class="btn waves-effect waves-light" type="submit" name="action" id="search-again-submit">Search Again
                         <i class="material-icons right">send</i>
                       </button>
                     </div>
@@ -239,33 +157,117 @@
                 </div>
 
               </form>
+
             </div>
           </div>
-
         </div>
-      </div>
 
-    </div>
+        <!-- Movie Results -->
+        <div class="container" id="movie-results-container">
 
-    <!-- FOURTH PAGE -->
-    <div class="container" id="fourth-container">
+          <div class="card">
 
-      <!-- Search for a new movie -->
+            <div class="card-body">
 
-      <!-- THIS CAN BE THE SAME AS THE SEARCH FORM ON PAGE 2 -->
+              <table class="highlight">
+                <thead>
+                  <tr>
+                    <th colspan="3" id="table-title"></th>
+                  </tr>
+                </thead>
 
-      <!-- Food Results -->
-      <div class="container" id="recipes-container">
-        <div class="card col s12">
-          <div class='carousel carousel-slider center recipe-item' data-indicator='true'>
+                <tbody id="movie-results-tbody">
+                </tbody>
+              </table>
+
+
+            </div>
+
           </div>
-          <a class="btn waves-effect waves-light prev" id="prevSlide">Previous</a>
-          <a class="btn waves-effect waves-light next" id="nextSlide">Next</a>
+        </div>
+
+      </div>
+
+      <!-- THIRD PAGE -->
+      <div class="container" id="third-container">
+
+        <!-- Search for a new movie -->
+
+        <!-- THIS CAN BE THE SAME AS THE SEARCH FORM ON PAGE 2 -->
+
+        <!-- Food Results -->
+        <div class="row" id="movie-food-container">
+
+          <div class="card col s12">
+
+            <div class="section foodListDiv">
+
+              <h4 class="header-font">CineMunchies:</h4>
+
+              <table>
+                <tbody id="food-list">
+
+                </tbody>
+              </table>
+
+            </div>
+
+            <div class="row">
+
+              <div class="section" id="add-food">
+                <p class="card-text">CineMunchie not listed above? Add yours here!</p>
+                <!-- <input class="form-control" id="add-food-input" type="text" placeholder="Food">
+              <button class="btn btn-primary" id="add-food-submit" type="submit">Add Food</button> -->
+                <form role="form" class="search-form" id="second-search-form">
+
+                  <!-- Input Field -->
+                  <div class="row">
+                    <form class="col">
+
+                      <div class="input-field col s8 m6 l6">
+                        <i class="material-icons prefix">local_pizza</i>
+                        <input id="add-food-input" type="text" class="">
+                        <label for="add-food-input">Add a Munchie</label>
+                      </div>
+
+                      <div class="input-field col s4 m6 l6">
+                        <button class="btn waves-effect waves-light" type="submit" name="action" id="add-food-submit">Submit
+                          <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+
+                    </form>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FOURTH PAGE -->
+      <div class="container" id="fourth-container">
+
+        <!-- Search for a new movie -->
+
+        <!-- THIS CAN BE THE SAME AS THE SEARCH FORM ON PAGE 2 -->
+
+        <!-- Food Results -->
+        <div class="container" id="recipes-container">
+          <div class="card col s12">
+            <div class='carousel carousel-slider center recipe-item' data-indicator='true'>
+
+            </div>
+            <!-- <a class="btn carousel-fixed-item left waves-effect waves-light prev" id="prevSlide">Previous</a>
+            <a class="btn carousel-fixed-item right waves-effect waves-light next" id="nextSlide">Next</a> -->
+          </div>
         </div>
       </div>
-    </div>
 
-  </div>
+    </div>
 
   </main>
 
@@ -278,7 +280,7 @@
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
-      © 2018 Team Urkel
+        © 2018 Team Urkel
       </div>
     </div>
   </footer>
