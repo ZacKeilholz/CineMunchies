@@ -469,7 +469,7 @@ function populateRecipeCarousel(recipeResponse) {
     $("#recipe-error").show();
     $(".recipe-item").hide();
     $("#third-container").show();
-    $("#recipe-error").html("<div style='color:red;'> Munchie not found, please try searching again.</div>");
+    $("#recipe-error").html("<div style='color:red;'>   Munchie not found, please try searching again.</div>");
     $()
   } 
   else{
